@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import projekat.models.Mesto;
 import projekat.repository.MestoRepository;
 
-@CrossOrigin
 @RestController
 public class MestoController {
 	
@@ -54,8 +53,8 @@ public class MestoController {
 	}
 	
 	@CrossOrigin
-	@DeleteMapping("category/{categoryid}")
-	public ResponseEntity<Mesto> deleteCategory(@PathVariable Integer mestoid) {
+	@DeleteMapping("mesto/{mestoid}")
+	public ResponseEntity<Mesto> deleteMesto(@PathVariable Integer mestoid) {
 		if(mestoRepository.existsById(mestoid))
 			mestoRepository.deleteById(mestoid);
 		return new ResponseEntity<>(HttpStatus.OK);
