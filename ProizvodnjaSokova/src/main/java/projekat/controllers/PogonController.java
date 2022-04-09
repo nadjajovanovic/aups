@@ -54,7 +54,7 @@ public class PogonController {
 	
 	@CrossOrigin
 	@DeleteMapping("pogon/{pogonid}")
-	public ResponseEntity<Pogon> deleteMesto(@PathVariable Integer pogonid) {
+	public ResponseEntity<Pogon> deletePogon(@PathVariable Integer pogonid) {
 		if(pogonRepository.existsById(pogonid))
 			pogonRepository.deleteById(pogonid);
 		return new ResponseEntity<>(HttpStatus.OK);

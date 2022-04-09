@@ -48,6 +48,7 @@ public class Radnik implements Serializable {
 	private Radnomesto radnomesto;
 
 	//bi-directional many-to-one association to Skladiste
+	@JsonIgnore
 	@OneToMany(mappedBy="radnik")
 	private List<Skladiste> skladistes;
 
