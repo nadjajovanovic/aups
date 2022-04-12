@@ -15,49 +15,50 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import projekat.models.Mesto;
-import projekat.repository.MestoRepository;
+import projekat.services.MestoService;
 
 @RestController
 public class MestoController {
 	
 	@Autowired
-	private MestoRepository mestoRepository;
+	private MestoService mestoService;
 	
-	public MestoController(MestoRepository mestoRepository) {
-		this.mestoRepository = mestoRepository;
+	
+	public MestoController(MestoService mestoService) {
+		this.mestoService = mestoService;
 	}
 	
 	@GetMapping("mesto")
 	public Collection<Mesto> getAllMesta() {
-		return mestoRepository.findAll();
+		final var mesta = mestoService.getAll();
+		final var listaMesta = mesta.stream().toList();
+		return listaMesta;
 	}
-	
+
 	@GetMapping("mesto/{mestoid}")
 	public Mesto getMesto(@PathVariable Integer mestoid) {
-		return mestoRepository.getById(mestoid);
+		final var oneMesto = mestoService.getOne(mestoid);
+		return oneMesto;
 	}
 	
 	@CrossOrigin
 	@PostMapping("mesto")
 	public ResponseEntity<Mesto> insertMesto(@RequestBody Mesto mesto) {
-		mestoRepository.save(mesto);
+		mestoService.insert(mesto);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@PutMapping("mesto/{mestoid}")
 	public ResponseEntity<Mesto> updateMesto(@RequestBody Mesto mesto) {
-		if(mestoRepository.existsById(mesto.getMestoid()))
-			mestoRepository.save(mesto);
+		mestoService.update(mesto);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@DeleteMapping("mesto/{mestoid}")
 	public ResponseEntity<Mesto> deleteMesto(@PathVariable Integer mestoid) {
-		if(mestoRepository.existsById(mestoid))
-			mestoRepository.deleteById(mestoid);
+		mestoService.delete(mestoid);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
 }

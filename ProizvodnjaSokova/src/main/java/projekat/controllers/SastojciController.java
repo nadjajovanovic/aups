@@ -15,48 +15,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import projekat.models.Sastojci;
-import projekat.repository.SastojciRepository;
+import projekat.services.SastojciService;
 
 @RestController
 public class SastojciController {
 	
 	@Autowired
-	private SastojciRepository sastojciRepository;
+	private SastojciService sastojciService;
 	
-	public SastojciController(SastojciRepository sastojciRepository) {
-		this.sastojciRepository = sastojciRepository;
+	public SastojciController(SastojciService sastojciService) {
+		this.sastojciService = sastojciService;
 	}
 	
 	@GetMapping("sastojci")
 	public Collection<Sastojci> getAllSastojci() {
-		return sastojciRepository.findAll();
+		final var sastojci = sastojciService.getAll();
+		final var listaSastojaka = sastojci.stream().toList();
+		return listaSastojaka;
 	}
 	
 	@GetMapping("sastojci/{sastojciid}")
 	public Sastojci getSastojak(@PathVariable Integer sastojciid) {
-		return sastojciRepository.getById(sastojciid);
+		final var oneSastojak = sastojciService.getOne(sastojciid);
+		return oneSastojak;
 	}
 	
 	@CrossOrigin
 	@PostMapping("sastojci")
 	public ResponseEntity<Sastojci> insertSastojak(@RequestBody Sastojci sastojci) {
-		sastojciRepository.save(sastojci);
+		sastojciService.insert(sastojci);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@PutMapping("sastojci/{sastojciid}")
 	public ResponseEntity<Sastojci> updateSastojak(@RequestBody Sastojci sastojci) {
-		if(sastojciRepository.existsById(sastojci.getSastojciid()))
-			sastojciRepository.save(sastojci);
+		sastojciService.update(sastojci);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@DeleteMapping("sastojci/{sastojciid}")
 	public ResponseEntity<Sastojci> deleteSastojak(@PathVariable Integer sastojciid) {
-		if(sastojciRepository.existsById(sastojciid))
-			sastojciRepository.deleteById(sastojciid);
+		sastojciService.delete(sastojciid);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

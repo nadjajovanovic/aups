@@ -15,48 +15,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import projekat.models.Planproizvodnje;
-import projekat.repository.PlanProizvodnjeRepository;
+import projekat.services.PlanProizvodnjeService;
 
 @RestController
 public class PlanProizvodnjeController {
 	
 	@Autowired
-	private PlanProizvodnjeRepository planProizvodnjeRepository;
+	private PlanProizvodnjeService planProizvodnjeService;
 	
-	public PlanProizvodnjeController(PlanProizvodnjeRepository planProizvodnjeRepository) {
-		this.planProizvodnjeRepository = planProizvodnjeRepository;
+	public PlanProizvodnjeController(PlanProizvodnjeService planProizvodnjeService) {
+		this.planProizvodnjeService = planProizvodnjeService;
 	}
 	
 	@GetMapping("plan-proizvodnje")
 	public Collection<Planproizvodnje> getAllPlanaProizvodnje() {
-		return planProizvodnjeRepository.findAll();
+		final var planProizvodnje = planProizvodnjeService.getAll();
+		final var listaPlanaProizvodnje = planProizvodnje.stream().toList();
+		return listaPlanaProizvodnje;
 	}
 	
 	@GetMapping("plan-proizvodnje/{planProizvodnjeId}")
 	public Planproizvodnje getPlanProizvodnje(@PathVariable Integer planProizvodnjeId) {
-		return planProizvodnjeRepository.getById(planProizvodnjeId);
+		final var onePlanProizvodnje = planProizvodnjeService.getOne(planProizvodnjeId);
+		return onePlanProizvodnje;
 	}
 	
 	@CrossOrigin
 	@PostMapping("plan-proizvodnje")
 	public ResponseEntity<Planproizvodnje> insertPlanProizvodnje(@RequestBody Planproizvodnje planProizvodnje) {
-		planProizvodnjeRepository.save(planProizvodnje);
+		planProizvodnjeService.insert(planProizvodnje);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@PutMapping("plan-proizvodnje/{planProizvodnjeId}")
 	public ResponseEntity<Planproizvodnje> updatePlanProizvodnje(@RequestBody Planproizvodnje planProizvodnje) {
-		if(planProizvodnjeRepository.existsById(planProizvodnje.getPlanproizvodnjeid()))
-			planProizvodnjeRepository.save(planProizvodnje);
+		planProizvodnjeService.update(planProizvodnje);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@DeleteMapping("plan-proizvodnje/{planProizvodnjeId}")
 	public ResponseEntity<Planproizvodnje> deletePlanProizvodnje(@PathVariable Integer planProizvodnjeId) {
-		if(planProizvodnjeRepository.existsById(planProizvodnjeId))
-			planProizvodnjeRepository.deleteById(planProizvodnjeId);
+		planProizvodnjeService.delete(planProizvodnjeId);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

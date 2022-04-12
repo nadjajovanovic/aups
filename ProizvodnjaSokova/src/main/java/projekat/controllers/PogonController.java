@@ -15,48 +15,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import projekat.models.Pogon;
-import projekat.repository.PogonRepository;
+import projekat.services.PogonService;
 
 @RestController
 public class PogonController {
 	
 	@Autowired
-	private PogonRepository pogonRepository;
+	private PogonService pogonService;
 	
-	public PogonController(PogonRepository pogonRepository) {
-		this.pogonRepository = pogonRepository;
+	public PogonController(PogonService pogonService) {
+		this.pogonService = pogonService;
 	}
 	
 	@GetMapping("pogon")
 	public Collection<Pogon> getAllPogon() {
-		return pogonRepository.findAll();
+		final var pogoni = pogonService.getAll();
+		final var listaPogona = pogoni.stream().toList();
+		return listaPogona;
 	}
 	
 	@GetMapping("pogon/{pogonid}")
 	public Pogon getPogon(@PathVariable Integer pogonid) {
-		return pogonRepository.getById(pogonid);
+		final var onePogon = pogonService.getOne(pogonid);
+		return onePogon;
 	}
 	
 	@CrossOrigin
 	@PostMapping("pogon")
 	public ResponseEntity<Pogon> insertPogon(@RequestBody Pogon pogon) {
-		pogonRepository.save(pogon);
+		pogonService.insert(pogon);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@PutMapping("pogon/{pogonid}")
 	public ResponseEntity<Pogon> updatePogon(@RequestBody Pogon pogon) {
-		if(pogonRepository.existsById(pogon.getPogonid()))
-			pogonRepository.save(pogon);
+		pogonService.update(pogon);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@DeleteMapping("pogon/{pogonid}")
 	public ResponseEntity<Pogon> deletePogon(@PathVariable Integer pogonid) {
-		if(pogonRepository.existsById(pogonid))
-			pogonRepository.deleteById(pogonid);
+		pogonService.delete(pogonid);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

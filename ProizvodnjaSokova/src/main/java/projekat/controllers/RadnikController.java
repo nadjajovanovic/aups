@@ -15,48 +15,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import projekat.models.Radnik;
-import projekat.repository.RadnikRepository;
+import projekat.services.RadnikService;
 
 @RestController
 public class RadnikController {
 	
 	@Autowired
-	private RadnikRepository radnikRepository;
+	private RadnikService radnikService;
 	
-	public RadnikController(RadnikRepository radnikRepository) {
-		this.radnikRepository = radnikRepository;
+	public RadnikController(RadnikService radnikService) {
+		this.radnikService = radnikService;
 	}
 	
 	@GetMapping("radnik")
 	public Collection<Radnik> getAllRadnike() {
-		return radnikRepository.findAll();
+		final var radnici = radnikService.getAll();
+		final var listaRadnika = radnici.stream().toList();
+		return listaRadnika;
 	}
 	
 	@GetMapping("radnik/{radnikid}")
 	public Radnik getRadnika(@PathVariable Integer radnikid) {
-		return radnikRepository.getById(radnikid);
+		final var oneRadnik = radnikService.getOne(radnikid);
+		return oneRadnik;
 	}
 	
 	@CrossOrigin
 	@PostMapping("radnik")
 	public ResponseEntity<Radnik> insertRadnika(@RequestBody Radnik radnik) {
-		radnikRepository.save(radnik);
+		radnikService.insert(radnik);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@PutMapping("radnik/{radnikid}")
 	public ResponseEntity<Radnik> updateRadnika(@RequestBody Radnik radnik) {
-		if(radnikRepository.existsById(radnik.getRadnikid()))
-			radnikRepository.save(radnik);
+		radnikService.update(radnik);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@DeleteMapping("radnik/{radnikid}")
 	public ResponseEntity<Radnik> deletePogon(@PathVariable Integer radnikid) {
-		if(radnikRepository.existsById(radnikid))
-			radnikRepository.deleteById(radnikid);
+		radnikService.delete(radnikid);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

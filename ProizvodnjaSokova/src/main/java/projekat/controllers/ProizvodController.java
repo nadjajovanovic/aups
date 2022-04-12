@@ -15,48 +15,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import projekat.models.Proizvod;
-import projekat.repository.ProizvodRepository;
+import projekat.services.ProizvodService;
 
 @RestController
 public class ProizvodController {
 	
 	@Autowired
-	private ProizvodRepository proizvodRepository;
+	private ProizvodService proizvodService;
 	
-	public ProizvodController(ProizvodRepository proizvodRepository) {
-		this.proizvodRepository = proizvodRepository;
+	public ProizvodController(ProizvodService proizvodService) {
+		this.proizvodService = proizvodService;
 	}
 	
 	@GetMapping("proizvod")
 	public Collection<Proizvod> getAllProizvode() {
-		return proizvodRepository.findAll();
+		final var proizovdi = proizvodService.getAll();
+		final var listaProizvoda = proizovdi.stream().toList();
+		return listaProizvoda;
 	}
 	
 	@GetMapping("proizvod/{proizvodid}")
 	public Proizvod getProizvod(@PathVariable Integer proizvodid) {
-		return proizvodRepository.getById(proizvodid);
+		final var oneProizvod = proizvodService.getOne(proizvodid);
+		return oneProizvod;
 	}
 	
 	@CrossOrigin
 	@PostMapping("proizvod")
 	public ResponseEntity<Proizvod> insertProizvod(@RequestBody Proizvod proizvod) {
-		proizvodRepository.save(proizvod);
+		proizvodService.insert(proizvod);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@PutMapping("proizvod/{proizvodid}")
 	public ResponseEntity<Proizvod> updateProizvod(@RequestBody Proizvod proizvod) {
-		if(proizvodRepository.existsById(proizvod.getProizvodid()))
-			proizvodRepository.save(proizvod);
+		proizvodService.update(proizvod);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@DeleteMapping("proizvod/{proizvodid}")
 	public ResponseEntity<Proizvod> deleteProizvod(@PathVariable Integer proizvodid) {
-		if(proizvodRepository.existsById(proizvodid))
-			proizvodRepository.deleteById(proizvodid);
+		proizvodService.delete(proizvodid);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

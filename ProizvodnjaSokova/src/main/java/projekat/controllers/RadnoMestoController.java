@@ -15,48 +15,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import projekat.models.Radnomesto;
-import projekat.repository.RadnoMestoRepository;
+import projekat.services.RadnoMestoService;
 
 @RestController
 public class RadnoMestoController {
 
 	@Autowired
-	private RadnoMestoRepository radnoMestoRepository;
+	private RadnoMestoService radnoMestoService;
 	
-	public RadnoMestoController(RadnoMestoRepository radnoMestoRepository) {
-		this.radnoMestoRepository = radnoMestoRepository;
+	public RadnoMestoController(RadnoMestoService radnoMestoService) {
+		this.radnoMestoService = radnoMestoService;
 	}
 	
 	@GetMapping("radno-mesto")
 	public Collection<Radnomesto> getAllRadnaMesta() {
-		return radnoMestoRepository.findAll();
+		final var radnaMesta = radnoMestoService.getAll();
+		final var listaRadnihMesta = radnaMesta.stream().toList();
+		return listaRadnihMesta;
 	}
 	
 	@GetMapping("radno-mesto/{radnoMestoId}")
 	public Radnomesto getRadnoMesto(@PathVariable Integer radnoMestoId) {
-		return radnoMestoRepository.getById(radnoMestoId);
+		final var oneRadnoMesto = radnoMestoService.getOne(radnoMestoId);
+		return oneRadnoMesto;
 	}
 	
 	@CrossOrigin
 	@PostMapping("radno-mesto")
 	public ResponseEntity<Radnomesto> insertRadnoMesto(@RequestBody Radnomesto radnomesto) {
-		radnoMestoRepository.save(radnomesto);
+		radnoMestoService.insert(radnomesto);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@PutMapping("radno-mesto/{radnoMestoId}")
 	public ResponseEntity<Radnomesto> updateRadnoMesto(@RequestBody Radnomesto radnomesto) {
-		if(radnoMestoRepository.existsById(radnomesto.getRadnomestoid()))
-			radnoMestoRepository.save(radnomesto);
+		radnoMestoService.update(radnomesto);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@DeleteMapping("radno-mesto/{radnoMestoId}")
 	public ResponseEntity<Radnomesto> deleteRadnoMesto(@PathVariable Integer radnoMestoId) {
-		if(radnoMestoRepository.existsById(radnoMestoId))
-			radnoMestoRepository.deleteById(radnoMestoId);
+		radnoMestoService.delete(radnoMestoId);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

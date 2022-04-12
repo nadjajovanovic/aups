@@ -15,48 +15,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import projekat.models.Vrstatransporta;
-import projekat.repository.VrstaTransportaRepository;
+import projekat.services.VrstaTransportaService;
 
 @RestController
 public class VrstaTransportaController {
 	
 	@Autowired
-	private VrstaTransportaRepository vrstaTransportaRepository;
+	private VrstaTransportaService vrstaTransportaService;
 	
-	public VrstaTransportaController(VrstaTransportaRepository vrstaTransportaRepository) {
-		this.vrstaTransportaRepository = vrstaTransportaRepository;
+	public VrstaTransportaController(VrstaTransportaService vrstaTransportaService) {
+		this.vrstaTransportaService = vrstaTransportaService;
 	}
 	
 	@GetMapping("vrsta-transporta")
 	public Collection<Vrstatransporta> getAllVrstaTransporta() {
-		return vrstaTransportaRepository.findAll();
+		final var vrsteTrasnporta = vrstaTransportaService.getAll();
+		final var listaVrstaTransporta = vrsteTrasnporta.stream().toList();
+		return listaVrstaTransporta;
 	}
 	
 	@GetMapping("vrsta-transporta/{vrstaTransportaId}")
 	public Vrstatransporta getVrstaTransporta(@PathVariable Integer vrstaTransportaId) {
-		return vrstaTransportaRepository.getById(vrstaTransportaId);
+		final var oneVrstaTransporta = vrstaTransportaService.getOne(vrstaTransportaId);
+		return oneVrstaTransporta;
 	}
 	
 	@CrossOrigin
 	@PostMapping("vrsta-transporta")
 	public ResponseEntity<Vrstatransporta> insertVrstaTransporta(@RequestBody Vrstatransporta vrstatransporta) {
-		vrstaTransportaRepository.save(vrstatransporta);
+		vrstaTransportaService.insert(vrstatransporta);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@PutMapping("vrsta-transporta/{vrstaTransportaId}")
 	public ResponseEntity<Vrstatransporta> updateVrstaTransporta(@RequestBody Vrstatransporta vrstatransporta) {
-		if(vrstaTransportaRepository.existsById(vrstatransporta.getVrstatransportaid()))
-			vrstaTransportaRepository.save(vrstatransporta);
+		vrstaTransportaService.update(vrstatransporta);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@DeleteMapping("vrsta-transporta/{vrstaTransportaId}")
 	public ResponseEntity<Vrstatransporta> deletePogon(@PathVariable Integer vrstaTransportaId) {
-		if(vrstaTransportaRepository.existsById(vrstaTransportaId))
-			vrstaTransportaRepository.deleteById(vrstaTransportaId);
+		vrstaTransportaService.delete(vrstaTransportaId);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

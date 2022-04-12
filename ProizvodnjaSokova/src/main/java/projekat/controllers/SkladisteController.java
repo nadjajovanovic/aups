@@ -15,48 +15,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import projekat.models.Skladiste;
-import projekat.repository.SkladisteRepository;
+import projekat.services.SkladisteService;
 
 @RestController
 public class SkladisteController {
 	
 	@Autowired
-	private SkladisteRepository skladisteRepository;
+	private SkladisteService skladisteService;
 	
-	public SkladisteController(SkladisteRepository skladisteRepository) {
-		this.skladisteRepository = skladisteRepository;
+	public SkladisteController(SkladisteService skladisteService) {
+		this.skladisteService = skladisteService;
 	}
 	
 	@GetMapping("skladiste")
 	public Collection<Skladiste> getAllSkladiste() {
-		return skladisteRepository.findAll();
+		final var skladista = skladisteService.getAll();
+		final var listaSkladista = skladista.stream().toList();
+		return listaSkladista;
 	}
 	
 	@GetMapping("skladiste/{skladisteid}")
 	public Skladiste getSkladiste(@PathVariable Integer skladisteid) {
-		return skladisteRepository.getById(skladisteid);
+		final var oneSkladiste = skladisteService.getOne(skladisteid);
+		return oneSkladiste;
 	}
 	
 	@CrossOrigin
 	@PostMapping("skladiste")
 	public ResponseEntity<Skladiste> insertSkladiste(@RequestBody Skladiste skladiste) {
-		skladisteRepository.save(skladiste);
+		skladisteService.insert(skladiste);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@PutMapping("skladiste/{skladisteid}")
 	public ResponseEntity<Skladiste> updateSkladiste(@RequestBody Skladiste skladiste) {
-		if(skladisteRepository.existsById(skladiste.getSkladisteid()))
-			skladisteRepository.save(skladiste);
+		skladisteService.update(skladiste);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@DeleteMapping("skladiste/{skladisteid}")
 	public ResponseEntity<Skladiste> deleteSkladiste(@PathVariable Integer skladisteid) {
-		if(skladisteRepository.existsById(skladisteid))
-			skladisteRepository.deleteById(skladisteid);
+		skladisteService.delete(skladisteid);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
