@@ -1,6 +1,7 @@
 package projekat.controllers;
 
 import java.util.Collection;
+import java.util.Comparator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class VrstaTransportaController {
 	@GetMapping("vrsta-transporta")
 	public Collection<Vrstatransporta> getAllVrstaTransporta() {
 		final var vrsteTrasnporta = vrstaTransportaService.getAll();
-		final var listaVrstaTransporta = vrsteTrasnporta.stream().toList();
+		final var listaVrstaTransporta = vrsteTrasnporta.stream().sorted(Comparator.comparingInt(Vrstatransporta::getVrstatransportaid)).toList();
 		return listaVrstaTransporta;
 	}
 	

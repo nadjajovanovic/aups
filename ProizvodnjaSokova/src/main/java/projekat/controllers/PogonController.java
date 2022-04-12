@@ -1,6 +1,7 @@
 package projekat.controllers;
 
 import java.util.Collection;
+import java.util.Comparator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class PogonController {
 	@GetMapping("pogon")
 	public Collection<Pogon> getAllPogon() {
 		final var pogoni = pogonService.getAll();
-		final var listaPogona = pogoni.stream().toList();
+		final var listaPogona = pogoni.stream().sorted(Comparator.comparingInt(Pogon::getPogonid)).toList();
 		return listaPogona;
 	}
 	
