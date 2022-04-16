@@ -49,7 +49,7 @@ public class PogonController {
 	}
 	
 	@CrossOrigin
-	@PutMapping("pogon/{pogonid}")
+	@PutMapping("pogon")
 	public ResponseEntity<Pogon> updatePogon(@RequestBody Pogon pogon) {
 		pogonService.update(pogon);
 		return new ResponseEntity<>(HttpStatus.OK);

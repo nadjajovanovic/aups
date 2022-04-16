@@ -49,7 +49,7 @@ public class TransportController {
 	}
 	
 	@CrossOrigin
-	@PutMapping("transport/{transportid}")
+	@PutMapping("transport")
 	public ResponseEntity<Transport> updateTransport(@RequestBody Transport transport) {
 		transportService.update(transport);
 		return new ResponseEntity<>(HttpStatus.OK);

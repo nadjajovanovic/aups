@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+div.container {
+    margin: 0px 40px;
+}
+
+.title-center {
+    margin: 0 auto;
+}
+
+.search-input {
+    width: 40%;
+    margin-left: 15px;
+}
+
+snack-bar-container.success {
+    background-color: #5cb85c;
+    color: #fff;
+}
+
+snack-bar-container.warn {
+    background-color: #f99157;
+    color: #fff;
+}
+
+snack-bar-container.notification simple-snack-bar {
+    font-size: 18px !important;
+    font-weight: bold;
+}

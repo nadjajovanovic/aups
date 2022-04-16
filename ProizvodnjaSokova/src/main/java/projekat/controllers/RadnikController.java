@@ -49,7 +49,7 @@ public class RadnikController {
 	}
 	
 	@CrossOrigin
-	@PutMapping("radnik/{radnikid}")
+	@PutMapping("radnik")
 	public ResponseEntity<Radnik> updateRadnika(@RequestBody Radnik radnik) {
 		radnikService.update(radnik);
 		return new ResponseEntity<>(HttpStatus.OK);

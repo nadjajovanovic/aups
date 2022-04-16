@@ -50,7 +50,7 @@ public class MestoController {
 	}
 	
 	@CrossOrigin
-	@PutMapping("mesto/{mestoid}")
+	@PutMapping("mesto")
 	public ResponseEntity<Mesto> updateMesto(@RequestBody Mesto mesto) {
 		mestoService.update(mesto);
 		return new ResponseEntity<>(HttpStatus.OK);
