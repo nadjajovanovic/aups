@@ -15,12 +15,27 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MatSnackBarModule} from '@angular/material/snack-bar';
 import { NotificationService } from './services/notification.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PogonComponent } from './components/pogon/pogon.component';
+import { PogonService } from './services/pogon.service';
+import { RadnoMestoComponent } from './components/radno-mesto/radno-mesto.component';
+import { RadnoMestoService } from './services/radnomesto.service';
+import { SastojciComponent } from './components/sastojci/sastojci.component';
+import { SastojciService } from './services/sastojci.service';
+import { VrstaTransportaComponent } from './components/vrsta-transporta/vrsta-transporta.component';
+import { VrstaTransportaService } from './services/vrstatransporta.service';
+import { TransportComponent } from './components/transport/transport.component';
+import { TransportService } from './services/transport.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     MestaComponent,
-    HomeComponent
+    HomeComponent,
+    PogonComponent,
+    RadnoMestoComponent,
+    SastojciComponent,
+    VrstaTransportaComponent,
+    TransportComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +50,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatSnackBarModule,
     BrowserAnimationsModule
   ],
-  providers: [MestoService, NotificationService],
+  providers: [MestoService, NotificationService, PogonService, RadnoMestoService, SastojciService, VrstaTransportaService, TransportService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

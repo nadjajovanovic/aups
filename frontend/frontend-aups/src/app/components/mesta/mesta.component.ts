@@ -20,6 +20,7 @@ export class MestaComponent implements OnInit {
   nazivm: any;
   p: number = 1;
   searchedKeyword: string;
+  heading: string;
 
   constructor(private formBuilder :  FormBuilder,
     private service: MestoService,
@@ -72,6 +73,7 @@ export class MestaComponent implements OnInit {
     this.mestaModelObj.mestoid = row.mestoid;
     this.formValue.controls['nazivm'].setValue(row.nazivm);
     this.formValue.controls['postanskibroj'].setValue(row.postanskibroj);
+    this.heading = "Update mesto";
   }
 
   updateMestoDetails() {
@@ -91,16 +93,7 @@ export class MestaComponent implements OnInit {
     this.formValue.reset();
     this.showAdd = true;
     this.showUpdate = false;
-  }
-
-  Search() {
-    if(this.nazivm == "") {
-      this.ngOnInit();
-    } else {
-      this.mesta = this.mesta.filter(res => {
-        return res.nazivm.toLocaleLowerCase().match(this.nazivm.toLocaleLowerCase());
-      });
-    }
+    this.heading = "Add mesto";
   }
 
   key: string = 'id';

@@ -3,7 +3,6 @@
 </mat-toolbar>
 <div class="d-flex container-fluid">
   <button  (click) = "clickAddMesto()" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Create</button>
-  <!--<input class="search-input" type="text" [(ngModel)] = "nazivm" (ngModelChange) = "Search()" placeholder="Search">-->
   <input class="search-input" type="text" [(ngModel)] = "searchedKeyword" placeholder="Search">
 </div>
 <table id="dtBasicExample" class="table table-sm mt-3">
@@ -34,7 +33,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Mesto details</h5>
+        <h5 class="modal-title" id="exampleModalLabel">{{ heading }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -43,9 +42,9 @@
         <form [formGroup] = "formValue">
           <div class="form-group">
             <label for="exampleInputEmail1">Naziv mesta</label>
-            <input type="text" formControlName = "nazivm" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Naziv mesta">
+            <input type="text" formControlName = "nazivm" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
             <label for="exampleInputEmail1">Postanski broj</label>
-            <input type="text" formControlName = "postanskibroj" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Naziv mesta">
+            <input type="text" formControlName = "postanskibroj" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
           </div>
         </form>
       </div>
