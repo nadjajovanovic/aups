@@ -1,9 +1,8 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { FormGroup, FormControl } from "@angular/forms";
-import { RadnoMesto } from "../models/radnomesto";
 import { Transport } from "../models/transport";
 
 @Injectable({
@@ -40,9 +39,21 @@ export class TransportService {
         }));
     }
 
+    /*public addTransport(data : Transport) {
+        return this.httpClient.post(this.transportUrl, data);
+    }
+
+    public updateTransport(data : Transport) {
+        return this.httpClient.put(this.transportUrl, data);
+    }
+
+    public deleteTransport(transportid: number) {
+        return this.httpClient.delete(this.transportUrl + transportid);;
+    }*/
+
     form: FormGroup = new FormGroup({
         $transportid: new FormControl(null),
-        datumt: new FormControl(new Date()),
+        datumt: new FormControl(''),
         lokacija: new FormControl(''),
         vrstatransporta: new FormControl('')
     });

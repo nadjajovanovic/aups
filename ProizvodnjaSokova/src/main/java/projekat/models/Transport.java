@@ -1,11 +1,11 @@
 package projekat.models;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.Date;
 import java.util.List;
 
 
@@ -23,8 +23,7 @@ public class Transport implements Serializable {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TRANSPORT_TRANSPORTID_GENERATOR")
 	private Integer transportid;
 
-	@Temporal(TemporalType.DATE)
-	private Date datumt;
+	private String datumt;
 
 	private String lokacija;
 
@@ -34,9 +33,12 @@ public class Transport implements Serializable {
 	private List<Planproizvodnje> planproizvodnjes;
 
 	//bi-directional many-to-one association to Vrstatransporta
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name="vrstatransportaid")
-	private Vrstatransporta vrstatransporta;
+	private Vrstatransporta vrstatransporta;*/
+	
+	@Column(name = "vrstatransportaid")
+	private Integer vrstatransporta;
 
 	public Transport() {
 	}
@@ -49,11 +51,11 @@ public class Transport implements Serializable {
 		this.transportid = transportid;
 	}
 
-	public Date getDatumt() {
+	public String getDatumt() {
 		return this.datumt;
 	}
 
-	public void setDatumt(Date datumt) {
+	public void setDatumt(String datumt) {
 		this.datumt = datumt;
 	}
 
@@ -87,12 +89,21 @@ public class Transport implements Serializable {
 		return planproizvodnje;
 	}
 
-	public Vrstatransporta getVrstatransporta() {
+	public Integer getVrstatransporta() {
+		return vrstatransporta;
+	}
+
+	public void setVrstatransporta(Integer vrstatransporta) {
+		this.vrstatransporta = vrstatransporta;
+	}
+
+	/*public Vrstatransporta getVrstatransporta() {
 		return this.vrstatransporta;
 	}
 
 	public void setVrstatransporta(Vrstatransporta vrstatransporta) {
 		this.vrstatransporta = vrstatransporta;
-	}
+	}*/
+	
 
 }

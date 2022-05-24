@@ -1,8 +1,6 @@
-import { VrstaTransporta } from "./vrstatransporta";
-
 export class Transport {
     transportid: number;
-    datumt: Date;
+    datumt: string = '';
     lokacija: string = '';
-    vrstatransporta: VrstaTransporta;
+    vrstatransporta: number;
 }

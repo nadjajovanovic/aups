@@ -18,9 +18,9 @@
     <tbody>
         <tr *ngFor = "let row of transporti | orderBy: key : reverse | filter: searchedKeyword | paginate: {itemsPerPage: 5, currentPage: p};">
             <td>{{ row.transportid}}</td>
-            <td>{{ row.datumt | date : "dd.MM.yyyy."}}</td>
+            <td>{{ row.datumt}}</td>
             <td>{{ row.lokacija}}</td>
-            <td>{{ row.vrstatransporta.nazivvt}}</td>
+            <td>{{ row.vrstatransporta}}</td>
             <td>
                 <button (click) = "onEdit(row)" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-info">&nbsp;<i class="fa fa-pen"></i></button>
                 <button (click) = "deleteTransport(row)" class="btn btn-danger mx-3">&nbsp;<i class="fa fa-trash"></i></button>
@@ -30,7 +30,6 @@
     <pagination-controls (pageChange) = "p = $event"></pagination-controls>
 </table>
   
-  <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -43,15 +42,15 @@
       <div class="modal-body">
         <form [formGroup] = "formValue">
           <div class="form-group">
-            <input formControlName="datumt" id="datumt" type="datumt" /> {{formValue.value.datumt | date: 'yyyy/MM/dd' }} <br>
+            <label for="exampleInputEmail1">Datum transporta</label>
+            <input type="text" formControlName = "datumt" class="form-control" id="exampleInputEmail1">
             <label for="exampleInputEmail1">Lokacija transporta</label>
-            <input type="text" formControlName = "lokacija" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Example select</label>
-                <select class="form-control">
-                  <option *ngFor="let vrstaTransporta of vrsteTransporta">{{ vrstaTransporta.nazivvt }}</option>
-                </select>
-              </div>
+            <input type="text" formControlName = "lokacija" class="form-control" id="exampleInputEmail1">
+            <label for="exampleFormControlSelect1">Vrsta transporta</label>
+            <select class="form-control" (change)="selectChangeHandler($event)" formControlName = "vrstatransporta" id="vrsteTransporta">
+              <option *ngFor="let vrsta of vrsteTransporta">{{ vrsta.nazivvt }}</option>
+            </select>
+            <p><span>You selected: </span><b>{{selectedVrsta}}</b></p>
           </div>
         </form>
       </div>
@@ -63,3 +62,50 @@
       </div>
     </div>
 </div>
+<!--<div class="container">
+  <div style="margin-top: 10px;">
+    <button (click) = "openDialog()" type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Create</button>
+    <div class="mat-elevation-z8">
+      <mat-form-field appearance="outline">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input>
+      </mat-form-field>
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="transportid">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Trasnport id</th>
+          <td mat-cell *matCellDef="let row"> {{row.transportid}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="datumt">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Datum trasnporta</th>
+          <td mat-cell *matCellDef="let row"> {{row.datumt}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="lokacija">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Lokacija </th>
+          <td mat-cell *matCellDef="let row"> {{row.lokacija}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="vrstatransporta">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Vrsta transporta </th>
+          <td mat-cell *matCellDef="let row"> {{row.vrstatransporta.nazivvt}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let row">
+            <button type="button" (click) = "editTransport(row)" class="btn btn-info">&nbsp;<i class="fa fa-pen"></i></button>
+            <button (click) = "deleteTransport(row)" class="btn btn-danger mx-3">&nbsp;<i class="fa fa-trash"></i></button>
+          </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+      </table>
+    
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" ></mat-paginator>
+    </div>
+  </div>
+</div>-->

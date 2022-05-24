@@ -25,9 +25,9 @@ public class Vrstatransporta implements Serializable {
 	private String nazivvt;
 
 	//bi-directional many-to-one association to Transport
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany(mappedBy="vrstatransporta")
-	private List<Transport> transports;
+	private List<Transport> transports;*/
 
 	public Vrstatransporta() {
 	}
@@ -48,7 +48,7 @@ public class Vrstatransporta implements Serializable {
 		this.nazivvt = nazivvt;
 	}
 
-	public List<Transport> getTransports() {
+	/*public List<Transport> getTransports() {
 		return this.transports;
 	}
 
@@ -68,6 +68,6 @@ public class Vrstatransporta implements Serializable {
 		transport.setVrstatransporta(null);
 
 		return transport;
-	}
+	}*/
 
 }

@@ -25,6 +25,19 @@ import { VrstaTransportaComponent } from './components/vrsta-transporta/vrsta-tr
 import { VrstaTransportaService } from './services/vrstatransporta.service';
 import { TransportComponent } from './components/transport/transport.component';
 import { TransportService } from './services/transport.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+//import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { MatInputModule} from '@angular/material/input';
+import { MatDialogModule} from '@angular/material/dialog';
+import { DialogTransportComponent } from './components/dialog/dialog-transport/dialog-transport.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
+import {MatSelectModule} from '@angular/material/select';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -35,7 +48,8 @@ import { TransportService } from './services/transport.service';
     RadnoMestoComponent,
     SastojciComponent,
     VrstaTransportaComponent,
-    TransportComponent
+    TransportComponent,
+    DialogTransportComponent
   ],
   imports: [
     BrowserModule,
@@ -48,9 +62,24 @@ import { TransportService } from './services/transport.service';
     Ng2OrderModule,
     NgxPaginationModule,
     MatSnackBarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    //MatMomentDateModule,
+    MatInputModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
-  providers: [MestoService, NotificationService, PogonService, RadnoMestoService, SastojciService, VrstaTransportaService, TransportService],
+  entryComponents: [DialogTransportComponent],
+  providers: [MestoService, NotificationService, PogonService, 
+    RadnoMestoService, SastojciService, VrstaTransportaService, TransportService,
+    /*{provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}}*/],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

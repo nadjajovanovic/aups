@@ -28,3 +28,22 @@ snack-bar-container.notification simple-snack-bar {
     font-size: 18px !important;
     font-weight: bold;
 }
+
+/*mat-form-field {
+    width: 100%;
+}*/
+
+table {
+    width: 100%;
+}
+  
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+

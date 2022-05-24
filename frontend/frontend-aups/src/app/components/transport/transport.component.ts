@@ -1,10 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Transport } from 'src/app/models/transport';
 import { VrstaTransporta } from 'src/app/models/vrstatransporta';
 import { NotificationService } from 'src/app/services/notification.service';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 import { TransportService } from 'src/app/services/transport.service';
 import { VrstaTransportaService } from 'src/app/services/vrstatransporta.service';
+import { DialogTransportComponent } from '../dialog/dialog-transport/dialog-transport.component';
 
 @Component({
   selector: 'app-transport',
@@ -22,11 +27,18 @@ export class TransportComponent implements OnInit {
   p: number = 1;
   searchedKeyword: string;
   heading: string;
+  selectedVrsta: number;
+  /*displayedColumns: string[] = ['transportid', 'datumt', 'lokacija', 'vrstatransporta', 'action'];
+  dataSource!: MatTableDataSource<Transport>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;*/
 
   constructor(private formBuilder :  FormBuilder,
     private service: TransportService,
     private fkService: VrstaTransportaService,
-    private notification : NotificationService) {
+    private notification : NotificationService, 
+    private dialog:  MatDialog) {
 
   }
 
@@ -42,6 +54,67 @@ export class TransportComponent implements OnInit {
     );
   } 
   
+  /*getAllTransporte() {
+   this.service.getAllTransporte().subscribe({
+     next:(res) => {
+       this.dataSource = new MatTableDataSource(res);
+
+       this.dataSource.paginator = this.paginator;
+       this.dataSource.sort = this.sort;
+     },
+     error: (err) => {
+       alert("Error while fetching data");
+     }
+   })
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogTransportComponent, {
+      width: '30%'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 1){ 
+         this.getAllTransporte();
+      }
+        
+    });
+  }
+
+  editTransport(row: any) {
+    this.dialog.open(DialogTransportComponent, {
+      width: '30%',
+      data: row
+    }).afterClosed().subscribe(val => {
+      if(val === 'update') {
+        this.getAllTransporte();
+      }
+    })
+  }
+
+  deleteTransport(row: any) {
+    this.service.deleteTransport(id).subscribe({
+      next:(res) => {
+        alert("Transport deleted");
+      },
+     error: (err) => {
+       alert("Error while fetching data");
+     }
+    })
+    if(confirm('Are you sure you want to delete')) {
+      this.service.deleteTransport(row.transportid);
+      alert("Deleted");
+      this.getAllTransporte();
+    }
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }*/
 
   postTransportaDetails(): void {
     this.transportModelObj.datumt = this.formValue.value.datumt;
@@ -59,18 +132,27 @@ export class TransportComponent implements OnInit {
     err => {
       alert("Something went wrong");
     })
+    /*this.service.addTransport(this.formValue.value);
+    this.notification.success(':: Added successfully');
+    let ref = document.getElementById('cancel');
+    ref?.click();
+    this.formValue.reset();
+    this.getAllTransporte();*/
+
   }
 
   getAllTransporte() {
     this.service.getAllTransporte().subscribe(transporti => {
       this.transporti = transporti;
+      console.log(transporti);
     });
+    
   }
 
   deleteTransport(row : any) {
     if(confirm('Are you sure you want to delete')) {
       this.service.deleteTransport(row.transportid)
-    .subscribe(res => {
+    .subscribe(_res => {
       this.notification.warn(':: Deleted successfully');
       this.getAllTransporte();
     }); 
@@ -91,8 +173,9 @@ export class TransportComponent implements OnInit {
     this.transportModelObj.datumt = this.formValue.value.datumt;
     this.transportModelObj.lokacija = this.formValue.value.lokacija;
     this.transportModelObj.vrstatransporta = this.formValue.value.vrstatransporta;
+
     this.service.updateTransport(this.transportModelObj)
-    .subscribe(res => {
+    .subscribe(_res => {
       this.notification.success(':: Updated successfully');
       let ref = document.getElementById('cancel');
       ref?.click();
@@ -113,6 +196,19 @@ export class TransportComponent implements OnInit {
   sort(key: string) {
     this.key = key;
     this.reverse = !this.reverse;
+  }
+
+  compareTo(a: { id: any; }, b: { id: any; }) {
+    return a.id == b.id;
+  }
+
+
+  onSubmit() {
+    console.log(this.formValue.value);
+  }
+
+  selectChangeHandler (event: any) {
+    this.selectedVrsta = event.target.value;
   }
 
 }

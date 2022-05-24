@@ -1,0 +1,60 @@
+<!--<h1 mat-dialog-title>Add Transport</h1>
+<div mat-dialog-content>
+    <form [formGroup] = "formValue">
+        <mat-form-field appearance="outline">
+            <mat-label>Datum transporta</mat-label>
+            <input formControlName = "datumt" matInput [matDatepicker]="datumt">
+            <mat-datepicker-toggle matSuffix [for]="datumt"></mat-datepicker-toggle>
+            <mat-datepicker #datumt></mat-datepicker>
+          </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Lokacija</mat-label>
+            <input formControlName = "lokacija" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Vrsta transporta</mat-label>
+            <mat-select formControlName = "vrstatransporta" [compareWith]="compareTo">
+                <mat-option *ngFor="let vrsta of vrsteTransporta" value="vrsta">
+                    {{ vrsta.nazivvt }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions [align]="'end'">
+<button mat-raised-button  color="warn" mat-dialog-close>Close</button>
+<button mat-raised-button  style="margin-left: 8px;" color="primary" (click) = "addTransport()">{{actionBtn}}</button>
+</div>
+<h3 mat-dialog-title>Dodavanje porudžbine</h3>
+   
+    <form class="mat-dialog-content"  #formControl="ngForm">
+      <div class="form">
+        <mat-form-field>
+          <input matInput [matDatepicker]="datumTransporta" placeholder="Datum trasnporta" [(ngModel)]="data.datumt" name="datumt">
+          <mat-datepicker-toggle matSuffix [for]="datumTransporta"></mat-datepicker-toggle>
+          <mat-datepicker #datumTransporta></mat-datepicker>
+        </mat-form-field>
+      </div>
+   
+      <div class="form">
+        <mat-form-field class="example-full-width">
+            <mat-label>Lokacija</mat-label>
+          <input type="tel" matInput placeholder="Lokacija" [(ngModel)]="data.lokacija" name="lokacija">
+        </mat-form-field>
+      </div>
+   
+      <div class="form">
+        <mat-form-field>
+          <mat-select [(ngModel)]="data.vrstatransporta" placeholder="Vrsta transprta" name="dobavljac" [compareWith]="compareTo">
+            <mat-option *ngFor="let vrsta of vrsteTransporta" value="vrsta">
+              {{ vrsta.nazivvt }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+   
+      <div mat-dialog-actions>
+        <button mat-button [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="addTransport()">Sačuvaj</button>
+        <button mat-button (click)="cancel()" tabindex="-1">Poništi</button>
+      </div>
+    </form>-->
