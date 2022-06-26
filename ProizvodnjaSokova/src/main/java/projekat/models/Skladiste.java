@@ -21,19 +21,25 @@ public class Skladiste implements Serializable {
 	private String oznakas;
 
 	//bi-directional many-to-one association to Mesto
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name="mestoid")
-	private Mesto mesto;
+	private Mesto mesto;*/
+	@Column(name="mestoid")
+	private Integer mesto;
 
 	//bi-directional many-to-one association to Radnik
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name="radnikid")
-	private Radnik radnik;
+	private Radnik radnik;*/
+	@Column(name="radnikid")
+	private Integer radnik;
 
 	//bi-directional many-to-one association to Sastojci
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name="sastojciid")
-	private Sastojci sastojci;
+	private Sastojci sastojci;*/
+	@Column(name="sastojciid") 
+	private Integer sastojci;
 
 	public Skladiste() {
 	}
@@ -54,27 +60,27 @@ public class Skladiste implements Serializable {
 		this.oznakas = oznakas;
 	}
 
-	public Mesto getMesto() {
+	public Integer getMesto() {
 		return this.mesto;
 	}
 
-	public void setMesto(Mesto mesto) {
+	public void setMesto(Integer mesto) {
 		this.mesto = mesto;
 	}
 
-	public Radnik getRadnik() {
+	public Integer getRadnik() {
 		return this.radnik;
 	}
 
-	public void setRadnik(Radnik radnik) {
+	public void setRadnik(Integer radnik) {
 		this.radnik = radnik;
 	}
 
-	public Sastojci getSastojci() {
+	public Integer getSastojci() {
 		return this.sastojci;
 	}
 
-	public void setSastojci(Sastojci sastojci) {
+	public void setSastojci(Integer sastojci) {
 		this.sastojci = sastojci;
 	}
 

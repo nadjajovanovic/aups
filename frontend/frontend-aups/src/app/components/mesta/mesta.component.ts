@@ -1,8 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Mesto } from 'src/app/models/mesto';
+import { DialogService } from 'src/app/services/dialog.service';
 import { MestoService } from 'src/app/services/mesto.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { DialogMestaComponent } from '../dialog/dialog-mesta/dialog-mesta.component';
 
 
 @Component({
@@ -12,94 +18,82 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class MestaComponent implements OnInit {
 
-  formValue!: FormGroup;
-  mestaModelObj : Mesto = new Mesto();
-  mesta: Mesto[] = [];
-  showAdd!: boolean;
-  showUpdate!: boolean;
-  nazivm: any;
   p: number = 1;
   searchedKeyword: string;
-  heading: string;
+  displayedColumns: string[] = ['mestoid', 'nazivm', 'postanskibroj', 'action'];
+  dataSource!: MatTableDataSource<Mesto>;
 
-  constructor(private formBuilder :  FormBuilder,
-    private service: MestoService,
-    private notification : NotificationService) { }
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  constructor( private service: MestoService,
+    private notification : NotificationService,
+    private dialog: MatDialog,
+    private dialogService: DialogService) { }
 
   ngOnInit(): void {
-    this.formValue = this.formBuilder.group({
-      nazivm: [''],
-      postanskibroj: ['']
-    });
     this.getAllMesta();
   } 
 
-  postMestoDetails(): void {
-    this.mestaModelObj.nazivm = this.formValue.value.nazivm;
-    this.mestaModelObj.postanskibroj = this.formValue.value.postanskibroj;
+  getAllMesta() {
+    this.service.getAllMesta().subscribe({
+      next: (res) => {
+        this.dataSource = new MatTableDataSource(res);
 
-    this.service.addMesto(this.mestaModelObj)
-    .subscribe(res => {
-      this.notification.success(':: Added successfully');
-      let ref = document.getElementById('cancel');
-      ref?.click();
-      this.formValue.reset();
-      this.getAllMesta();
-    }, 
-    err => {
-      alert("Something went wrong");
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      error: (err) => {
+        alert("Error while fetching data");
+      }
     })
   }
 
-  getAllMesta() {
-    this.service.getAllMesta().subscribe(mesta => {
-      this.mesta = mesta;
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogMestaComponent, {
+      width: '30%'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'save'){ 
+         this.getAllMesta();
+      }
+        
     });
   }
 
-  deleteMesto(row : any) {
-    if(confirm('Are you sure you want to delete')) {
-      this.service.deleteMesto(row.mestoid)
-    .subscribe(res => {
-      this.notification.warn(':: Deleted successfully');
-      this.getAllMesta();
-    }); 
+  editMesto(row: any) {
+    this.dialog.open(DialogMestaComponent, {
+      width: '30%',
+      data: row
+    }).afterClosed().subscribe(val => {
+      if(val === 'update') {
+        this.getAllMesta();
+      }
+    })
+  }
+
+  deleteMesto(row: any) {
+    this.dialogService.openConfirmationDialog('Are you sure you want to delete this record?')
+    .afterClosed().subscribe(res => {
+      if(res) {
+        this.service.deleteMesto(row.mestoid).subscribe
+        (
+          data => {
+            this.notification.warn(":: Deleted successfully");
+            this.getAllMesta();
+          }
+        )
+        console.log(res);
+      }
+    });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
-  }
-
-  onEdit(row: any) {
-    this.showAdd = false;
-    this.showUpdate = true;
-    this.mestaModelObj.mestoid = row.mestoid;
-    this.formValue.controls['nazivm'].setValue(row.nazivm);
-    this.formValue.controls['postanskibroj'].setValue(row.postanskibroj);
-    this.heading = "Update mesto";
-  }
-
-  updateMestoDetails() {
-    this.mestaModelObj.nazivm = this.formValue.value.nazivm;
-    this.mestaModelObj.postanskibroj = this.formValue.value.postanskibroj;
-    this.service.updateMesto(this.mestaModelObj)
-    .subscribe(res => {
-      this.notification.success(':: Updated successfully');
-      let ref = document.getElementById('cancel');
-      ref?.click();
-      this.formValue.reset();
-      this.getAllMesta();
-    });
-  }
-
-  clickAddMesto() {
-    this.formValue.reset();
-    this.showAdd = true;
-    this.showUpdate = false;
-    this.heading = "Add mesto";
-  }
-
-  key: string = 'id';
-  reverse: boolean = true;
-  sort(key: string) {
-    this.key = key;
-    this.reverse = !this.reverse;
   }
 }

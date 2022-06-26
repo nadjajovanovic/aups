@@ -28,9 +28,11 @@ public class Proizvod implements Serializable {
 	private String vrstapr;
 
 	//bi-directional many-to-one association to Planproizvodnje
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name="planproizvodnjeid")
-	private Planproizvodnje planproizvodnje;
+	private Planproizvodnje planproizvodnje;*/
+	@Column(name="planproizvodnjeid")
+	private Integer planproizvodnje;
 
 	public Proizvod() {
 	}
@@ -67,11 +69,11 @@ public class Proizvod implements Serializable {
 		this.vrstapr = vrstapr;
 	}
 
-	public Planproizvodnje getPlanproizvodnje() {
+	public Integer getPlanproizvodnje() {
 		return this.planproizvodnje;
 	}
 
-	public void setPlanproizvodnje(Planproizvodnje planproizvodnje) {
+	public void setPlanproizvodnje(Integer planproizvodnje) {
 		this.planproizvodnje = planproizvodnje;
 	}
 

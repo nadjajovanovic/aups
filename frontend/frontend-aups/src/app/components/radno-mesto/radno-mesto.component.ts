@@ -1,8 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { RadnoMesto } from 'src/app/models/radnomesto';
+import { DialogService } from 'src/app/services/dialog.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { RadnoMestoService } from 'src/app/services/radnomesto.service';
+import { DialogRadnaMestaComponent } from '../dialog/dialog-radna-mesta/dialog-radna-mesta.component';
 
 @Component({
   selector: 'app-radno-mesto',
@@ -19,84 +25,84 @@ export class RadnoMestoComponent implements OnInit {
   p: number = 1;
   searchedKeyword: string;
   heading: string;
+  displayedColumns: string[] = ['radnomestoid', 'nazivrm', 'action'];
+  dataSource!: MatTableDataSource<RadnoMesto>;
 
-  constructor(private formBuilder :  FormBuilder,
-    private service: RadnoMestoService,
-    private notification : NotificationService) {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+
+  constructor( private service: RadnoMestoService,
+    private notification : NotificationService,
+    private dialog: MatDialog,
+    private dialogService: DialogService) {
 
   }
 
   ngOnInit(): void {
-    this.formValue = this.formBuilder.group({
-      nazivrm: ['']
-    });
     this.getAllRadnihMesta();
   } 
 
-  postRadnoMestoDetails(): void {
-    this.radnoMestoModelObj.nazivrm = this.formValue.value.nazivrm;
+  getAllRadnihMesta() {
+    this.service.getAllRadnaMesta().subscribe({
+      next: (res) => {
+        this.dataSource = new MatTableDataSource(res);
 
-    this.service.addRadnoMesto(this.radnoMestoModelObj)
-    .subscribe(res => {
-      this.notification.success(':: Added successfully');
-      let ref = document.getElementById('cancel');
-      ref?.click();
-      this.formValue.reset();
-      this.getAllRadnihMesta();
-    }, 
-    err => {
-      alert("Something went wrong");
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      error: (err) => {
+        alert("Error while fetching data");
+      }
     })
   }
 
-  getAllRadnihMesta() {
-    this.service.getAllRadnaMesta().subscribe(radnihMesta => {
-      this.radnihMesta = radnihMesta;
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogRadnaMestaComponent, {
+      width: '30%'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'save'){ 
+         this.getAllRadnihMesta();
+      }
+        
     });
   }
 
-  deleteRadnoMesto(row : any) {
-    if(confirm('Are you sure you want to delete')) {
-      this.service.deleteRadnoMesto(row.radnomestoid)
-    .subscribe(res => {
-      this.notification.warn(':: Deleted successfully');
-      this.getAllRadnihMesta();
-    }); 
+  editRadnoMesto(row: any) {
+    this.dialog.open(DialogRadnaMestaComponent, {
+      width: '30%',
+      data: row
+    }).afterClosed().subscribe(val => {
+      if(val === 'update') {
+        this.getAllRadnihMesta();
+      }
+    })
+  }
+
+  deleteRadnoMesto(row: any) {
+    this.dialogService.openConfirmationDialog('Are you sure you want to delete this record?')
+    .afterClosed().subscribe(res => {
+      if(res) {
+        this.service.deleteRadnoMesto(row.radnomestoid).subscribe
+        (
+          data => {
+            this.notification.warn(":: Deleted successfully");
+            this.getAllRadnihMesta();
+          }
+        )
+        console.log(res);
+      }
+    });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
-  }
-
-  onEdit(row: any) {
-    this.showAdd = false;
-    this.showUpdate = true;
-    this.radnoMestoModelObj.radnomestoid = row.radnomestoid;
-    this.formValue.controls['nazivrm'].setValue(row.nazivrm);
-    this.heading = "Update radno mesto";
-  }
-
-  updateRadnoMestoDetails() {
-    this.radnoMestoModelObj.nazivrm = this.formValue.value.nazivrm;
-    this.service.updateRadnoMesto(this.radnoMestoModelObj)
-    .subscribe(res => {
-      this.notification.success(':: Updated successfully');
-      let ref = document.getElementById('cancel');
-      ref?.click();
-      this.formValue.reset();
-      this.getAllRadnihMesta();
-    });
-  }
-
-  clickAddRadnoMesto() {
-    this.formValue.reset();
-    this.showAdd = true;
-    this.showUpdate = false;
-    this.heading = "Add radno mesto";
-  }
-
-  key: string = 'id';
-  reverse: boolean = true;
-  sort(key: string) {
-    this.key = key;
-    this.reverse = !this.reverse;
   }
 
 }

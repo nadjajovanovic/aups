@@ -1,0 +1,63 @@
+<div class="container">
+    <div style="margin-top: 10px;">
+      <button (click) = "openDialog()" type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Create</button>
+      <div class="mat-elevation-z8">
+        <mat-form-field appearance="outline">
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter($event)" #input>
+        </mat-form-field>
+        <table mat-table [dataSource]="dataSource" matSort>
+  
+          <ng-container matColumnDef="planproizvodnjeid">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Plan proizvodnje id</th>
+            <td mat-cell *matCellDef="let row"> {{row.planproizvodnjeid}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="datum">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Datum plana proizvodnje</th>
+            <td mat-cell *matCellDef="let row"> {{row.datum | date : "dd.MM.yyyy."}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="kolicina">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Kolicina </th>
+            <td mat-cell *matCellDef="let row"> {{row.kolicina}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="napomena">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Napomena</th>
+            <td mat-cell *matCellDef="let row"> {{row.napomena}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="oznakapp">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Oznaka </th>
+            <td mat-cell *matCellDef="let row"> {{row.oznakapp}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="radnik">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Radnik </th>
+            <td mat-cell *matCellDef="let row"> {{row.radnik}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="transport">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Transport </th>
+            <td mat-cell *matCellDef="let row"> {{row.transport}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let row">
+              <button type="button" (click) = "editPlanProizvodnje(row)" class="btn btn-info">&nbsp;<i class="fa fa-pen"></i></button>
+              <button (click) = "deletePlanProizvodnje(row)" class="btn btn-danger mx-3">&nbsp;<i class="fa fa-trash"></i></button>
+            </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+        </table>
+      
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" ></mat-paginator>
+      </div>
+    </div>
+  </div>
+  

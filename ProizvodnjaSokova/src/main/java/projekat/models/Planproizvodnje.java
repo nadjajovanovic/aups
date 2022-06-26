@@ -34,19 +34,23 @@ public class Planproizvodnje implements Serializable {
 	private String oznakapp;
 
 	//bi-directional many-to-one association to Radnik
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name="radnikid")
-	private Radnik radnik;
+	private Radnik radnik;*/
+	@Column(name="radnikid")
+	private Integer radnik;
 
 	//bi-directional many-to-one association to Transport
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name="transportid")
-	private Transport transport;
+	private Transport transport;*/
+	@Column(name="transportid")
+	private Integer transport;
 
 	//bi-directional many-to-one association to Proizvod
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany(mappedBy="planproizvodnje")
-	private List<Proizvod> proizvods;
+	private List<Proizvod> proizvods;*/
 
 	public Planproizvodnje() {
 	}
@@ -91,23 +95,23 @@ public class Planproizvodnje implements Serializable {
 		this.oznakapp = oznakapp;
 	}
 
-	public Radnik getRadnik() {
+	public Integer getRadnik() {
 		return this.radnik;
 	}
 
-	public void setRadnik(Radnik radnik) {
+	public void setRadnik(Integer radnik) {
 		this.radnik = radnik;
 	}
 
-	public Transport getTransport() {
+	public Integer getTransport() {
 		return this.transport;
 	}
 
-	public void setTransport(Transport transport) {
+	public void setTransport(Integer transport) {
 		this.transport = transport;
 	}
 
-	public List<Proizvod> getProizvods() {
+	/*public List<Proizvod> getProizvods() {
 		return this.proizvods;
 	}
 
@@ -127,6 +131,6 @@ public class Planproizvodnje implements Serializable {
 		proizvod.setPlanproizvodnje(null);
 
 		return proizvod;
-	}
+	}*/
 
 }

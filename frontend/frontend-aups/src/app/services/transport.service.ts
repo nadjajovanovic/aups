@@ -38,23 +38,4 @@ export class TransportService {
             return res;
         }));
     }
-
-    /*public addTransport(data : Transport) {
-        return this.httpClient.post(this.transportUrl, data);
-    }
-
-    public updateTransport(data : Transport) {
-        return this.httpClient.put(this.transportUrl, data);
-    }
-
-    public deleteTransport(transportid: number) {
-        return this.httpClient.delete(this.transportUrl + transportid);;
-    }*/
-
-    form: FormGroup = new FormGroup({
-        $transportid: new FormControl(null),
-        datumt: new FormControl(''),
-        lokacija: new FormControl(''),
-        vrstatransporta: new FormControl('')
-    });
 }

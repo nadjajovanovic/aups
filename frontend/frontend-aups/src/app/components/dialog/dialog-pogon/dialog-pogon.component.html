@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>{{ heading }}</h1>
+<div mat-dialog-content>
+    <form [formGroup] = "formValue">
+        <mat-form-field appearance="outline">
+            <mat-label>Oznaka pogona</mat-label>
+            <input formControlName = "oznakap" matInput>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions [align]="'end'">
+    <button mat-raised-button  color="warn" mat-dialog-close>Close</button>
+    <button mat-raised-button  style="margin-left: 8px;" color="primary" (click) = "addMesto()">{{actionBtn}}</button>
+</div>

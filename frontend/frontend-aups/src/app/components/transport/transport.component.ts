@@ -10,6 +10,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { TransportService } from 'src/app/services/transport.service';
 import { VrstaTransportaService } from 'src/app/services/vrstatransporta.service';
 import { DialogTransportComponent } from '../dialog/dialog-transport/dialog-transport.component';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-transport',
@@ -17,44 +18,29 @@ import { DialogTransportComponent } from '../dialog/dialog-transport/dialog-tran
   styleUrls: ['./transport.component.css']
 })
 export class TransportComponent implements OnInit {
-
-  formValue!: FormGroup;
-  transportModelObj : Transport = new Transport();
-  transporti: Transport[] = [];
-  vrsteTransporta: VrstaTransporta[] = []
+  
   showAdd!: boolean;
   showUpdate!: boolean;
   p: number = 1;
   searchedKeyword: string;
-  heading: string;
-  selectedVrsta: number;
-  /*displayedColumns: string[] = ['transportid', 'datumt', 'lokacija', 'vrstatransporta', 'action'];
+  displayedColumns: string[] = ['transportid', 'datumt', 'lokacija', 'vrstatransporta', 'action'];
   dataSource!: MatTableDataSource<Transport>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;*/
+  @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private formBuilder :  FormBuilder,
-    private service: TransportService,
-    private fkService: VrstaTransportaService,
+  constructor( private service: TransportService,
     private notification : NotificationService, 
-    private dialog:  MatDialog) {
+    private dialog:  MatDialog,
+    private dialogService: DialogService) {
 
   }
 
   ngOnInit(): void {
-    this.formValue = this.formBuilder.group({
-      datumt: [''],
-      lokacija: [''],
-      vrstatransporta: ['']
-    });
     this.getAllTransporte();
-    this.fkService.getAllVrsteTransporta().subscribe(vrsteTransporta =>
-      this.vrsteTransporta = vrsteTransporta
-    );
   } 
   
-  /*getAllTransporte() {
+  getAllTransporte() {
    this.service.getAllTransporte().subscribe({
      next:(res) => {
        this.dataSource = new MatTableDataSource(res);
@@ -73,7 +59,7 @@ export class TransportComponent implements OnInit {
       width: '30%'
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result == 1){ 
+      if (result === 'save'){ 
          this.getAllTransporte();
       }
         
@@ -92,19 +78,19 @@ export class TransportComponent implements OnInit {
   }
 
   deleteTransport(row: any) {
-    this.service.deleteTransport(id).subscribe({
-      next:(res) => {
-        alert("Transport deleted");
-      },
-     error: (err) => {
-       alert("Error while fetching data");
-     }
-    })
-    if(confirm('Are you sure you want to delete')) {
-      this.service.deleteTransport(row.transportid);
-      alert("Deleted");
-      this.getAllTransporte();
-    }
+    this.dialogService.openConfirmationDialog('Are you sure you want to delete this record?')
+    .afterClosed().subscribe(res => {
+      if(res) {
+        this.service.deleteTransport(row.transportid).subscribe
+        (
+          data => {
+            this.notification.warn(":: Deleted successfully");
+            this.getAllTransporte();
+          }
+        )
+        console.log(res);
+      }
+    });
   }
 
   applyFilter(event: Event) {
@@ -114,101 +100,5 @@ export class TransportComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
-  }*/
-
-  postTransportaDetails(): void {
-    this.transportModelObj.datumt = this.formValue.value.datumt;
-    this.transportModelObj.lokacija = this.formValue.value.lokacija;
-    this.transportModelObj.vrstatransporta = this.formValue.value.vrstatransporta;
-
-    this.service.addTransport(this.transportModelObj)
-    .subscribe(res => {
-      this.notification.success(':: Added successfully');
-      let ref = document.getElementById('cancel');
-      ref?.click();
-      this.formValue.reset();
-      this.getAllTransporte();
-    }, 
-    err => {
-      alert("Something went wrong");
-    })
-    /*this.service.addTransport(this.formValue.value);
-    this.notification.success(':: Added successfully');
-    let ref = document.getElementById('cancel');
-    ref?.click();
-    this.formValue.reset();
-    this.getAllTransporte();*/
-
   }
-
-  getAllTransporte() {
-    this.service.getAllTransporte().subscribe(transporti => {
-      this.transporti = transporti;
-      console.log(transporti);
-    });
-    
-  }
-
-  deleteTransport(row : any) {
-    if(confirm('Are you sure you want to delete')) {
-      this.service.deleteTransport(row.transportid)
-    .subscribe(_res => {
-      this.notification.warn(':: Deleted successfully');
-      this.getAllTransporte();
-    }); 
-    }
-  }
-
-  onEdit(row: any) {
-    this.showAdd = false;
-    this.showUpdate = true;
-    this.transportModelObj.transportid = row.transportid;
-    this.formValue.controls['datumt'].setValue(row.datumt);
-    this.formValue.controls['lokacija'].setValue(row.lokacija);
-    this.formValue.controls['vrstatransporta'].setValue(row.vrstatransporta);
-    this.heading = "Update transport";
-  }
-
-  updateTransportDetails() {
-    this.transportModelObj.datumt = this.formValue.value.datumt;
-    this.transportModelObj.lokacija = this.formValue.value.lokacija;
-    this.transportModelObj.vrstatransporta = this.formValue.value.vrstatransporta;
-
-    this.service.updateTransport(this.transportModelObj)
-    .subscribe(_res => {
-      this.notification.success(':: Updated successfully');
-      let ref = document.getElementById('cancel');
-      ref?.click();
-      this.formValue.reset();
-      this.getAllTransporte();
-    });
-  }
-
-  clickAddTransport() {
-    this.formValue.reset();
-    this.showAdd = true;
-    this.showUpdate = false;
-    this.heading = "Add transport";
-  }
-
-  key: string = 'id';
-  reverse: boolean = true;
-  sort(key: string) {
-    this.key = key;
-    this.reverse = !this.reverse;
-  }
-
-  compareTo(a: { id: any; }, b: { id: any; }) {
-    return a.id == b.id;
-  }
-
-
-  onSubmit() {
-    console.log(this.formValue.value);
-  }
-
-  selectChangeHandler (event: any) {
-    this.selectedVrsta = event.target.value;
-  }
-
 }

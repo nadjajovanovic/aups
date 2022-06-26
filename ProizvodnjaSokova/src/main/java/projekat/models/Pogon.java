@@ -25,9 +25,9 @@ public class Pogon implements Serializable {
 	private String oznakap;
 
 	//bi-directional many-to-one association to Radnik
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany(mappedBy="pogon")
-	private List<Radnik> radniks;
+	private List<Radnik> radniks;*/
 
 	public Pogon() {
 	}
@@ -48,7 +48,7 @@ public class Pogon implements Serializable {
 		this.oznakap = oznakap;
 	}
 
-	public List<Radnik> getRadniks() {
+	/*public List<Radnik> getRadniks() {
 		return this.radniks;
 	}
 
@@ -68,6 +68,6 @@ public class Pogon implements Serializable {
 		radnik.setPogon(null);
 
 		return radnik;
-	}
+	}*/
 
 }

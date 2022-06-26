@@ -1,0 +1,46 @@
+<h1 mat-dialog-title>{{ heading }}</h1>
+<div mat-dialog-content>
+    <p>{{ formValue.value | json }}</p>
+    <form [formGroup] = "formValue">
+        <mat-form-field appearance="outline">
+            <mat-label>Ime radnika</mat-label>
+            <input formControlName = "ime" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Prezime radnika</mat-label>
+            <input formControlName = "prezime" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>JMBG radnika</mat-label>
+            <input formControlName = "jmbg" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Username radnika</mat-label>
+            <input formControlName = "username" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Sifra radnika</mat-label>
+            <input formControlName = "password" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Pogon</mat-label>
+            <mat-select formControlName = "pogon">
+                <mat-option *ngFor="let p of pogoni" [value] = "p.pogonid">
+                    {{ p.oznakap }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Radno mesto</mat-label>
+            <mat-select formControlName = "radnomesto">
+                <mat-option *ngFor="let rm of radnihMesta" [value] = "rm.radnomestoid">
+                    {{ rm.nazivrm }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions [align]="'end'">
+    <button mat-raised-button  color="warn" mat-dialog-close>Close</button>
+    <button mat-raised-button  style="margin-left: 8px;" color="primary" (click) = "addRadnoMesto()">{{actionBtn}}</button>
+</div>

@@ -1,0 +1,44 @@
+<h1 mat-dialog-title>{{ heading }}</h1>
+<div mat-dialog-content>
+    <p>{{ formValue.value | json }}</p>
+    <form [formGroup] = "formValue">
+        <mat-form-field appearance="outline">
+            <mat-label>Datum plana proizvodnje</mat-label>
+            <input formControlName = "datum" matInput [matDatepicker]="datum">
+            <mat-datepicker-toggle matSuffix [for]="datum"></mat-datepicker-toggle>
+            <mat-datepicker #datum></mat-datepicker>
+          </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Kolicina</mat-label>
+            <input formControlName = "kolicina" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Napomena</mat-label>
+            <input formControlName = "napomena" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Oznaka plana proizvodnje</mat-label>
+            <input formControlName = "oznakapp" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Radnik</mat-label>
+            <mat-select formControlName = "radnik">
+                <mat-option *ngFor="let r of radnici" [value] = "r.radnikid">
+                    {{ r.ime }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Transport</mat-label>
+            <mat-select formControlName = "transport">
+                <mat-option *ngFor="let t of transporti" [value] = "t.transportid">
+                    {{ t.lokacija }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions [align]="'end'">
+    <button mat-raised-button  color="warn" mat-dialog-close>Close</button>
+    <button mat-raised-button  style="margin-left: 8px;" color="primary" (click) = "addPlanProizvodnje()">{{actionBtn}}</button>
+</div>

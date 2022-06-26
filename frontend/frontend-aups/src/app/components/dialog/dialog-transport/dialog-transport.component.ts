@@ -5,6 +5,7 @@ import { VrstaTransportaService } from 'src/app/services/vrstatransporta.service
 import { TransportService } from 'src/app/services/transport.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Transport } from 'src/app/models/transport';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-dialog-transport',
@@ -12,20 +13,19 @@ import { Transport } from 'src/app/models/transport';
   styleUrls: ['./dialog-transport.component.css']
 })
 export class DialogTransportComponent implements OnInit {
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
 
-  /*vrsteTransporta: VrstaTransporta[] = [];
-  transporti: Transport[] = [];
+  vrsteTransporta: VrstaTransporta[] = [];
   formValue!: FormGroup;
   actionBtn : string = "Save";
+  currentid : number;
+  heading: string = "Add transport";
 
   constructor(private fkService: VrstaTransportaService,
     private service : TransportService,
+    private notification : NotificationService,
     private formBuilder: FormBuilder, 
     private dialogRef : MatDialogRef<DialogTransportComponent>,
-    @Inject(MAT_DIALOG_DATA) public data : Transport ) { }
+    @Inject(MAT_DIALOG_DATA) public editData : Transport ) { }
 
   ngOnInit(): void {
     this.formValue = this.formBuilder.group({
@@ -34,15 +34,14 @@ export class DialogTransportComponent implements OnInit {
       vrstatransporta: ['', Validators.required]
     });
 
-    this.fkService.getAllVrsteTransporta().subscribe(vrsteTransporta =>
-      this.vrsteTransporta = vrsteTransporta
-    );
-
     if(this.editData) {
       this.actionBtn = "Update";
-      this.formValue.controls['datumt'].setValue(this.editData.datumt);
-      this.formValue.controls['lokacija'].setValue(this.editData.lokacija);
-      this.formValue.controls['vrstatransporta'].setValue(this.editData.vrstatransporta);
+      this.heading = "Update transport";
+      this.formValue.patchValue({
+        datumt: this.editData.datumt,
+        lokacija: this.editData.lokacija,
+        vrstatransporta: this.editData.vrstatransporta
+      });
     }
 
     this.fkService.getAllVrsteTransporta().subscribe(vrsteTransporta =>
@@ -51,23 +50,11 @@ export class DialogTransportComponent implements OnInit {
 
   }
 
-
-  compareTo(a: { id: any; }, b: { id: any; }) {
-    return a.id == b.id;
-  }
-  
-  public addTransport(): void {
-    this.service.addTransport(this.data);
-    alert("Added");
-  }
-
   public cancel(): void {
     this.dialogRef.close();
   }
 
-  compareTo(t1: Transport, t2: Transport): boolean {
-    return t1 && t2 ? t1.vrstatransporta === t2.vrstatransporta : t1 === t2;
-  }
+ 
 
   public addTransport() {
     if(!this.editData) {
@@ -75,7 +62,7 @@ export class DialogTransportComponent implements OnInit {
         this.service.addTransport(this.formValue.value)
         .subscribe({
           next: (res) => {
-            alert("Transport added succesfully");
+            this.notification.success(':: Added successfully');
             this.formValue.reset();
             this.dialogRef.close('save');
           },
@@ -87,24 +74,23 @@ export class DialogTransportComponent implements OnInit {
     } else {
       this.updateTransport();
     }
-    this.service.addTransport(this.formValue.value);
-    alert("Transport added succesfully");
-    this.formValue.reset();
-    this.dialogRef.close('save');
   }
 
   public updateTransport() {
-    this.service.updateTransport(this.formValue.value)
-        .subscribe({
-          next: (res) => {
-            alert("Transport modified succesfully");
-            this.formValue.reset();
-            this.dialogRef.close('update');
-          },
-          error: () => {
-            alert("Something went wrong");
-          }
-        })
-  }*/
+    this.currentid = this.editData.transportid;
+    console.log(this.currentid);
+    let data = {
+      datumt : this.formValue.value.datumt,
+      lokacija: this.formValue.value.lokacija,
+      vrstatransporta: this.formValue.value.vrstatransporta,
+      transportid : this.currentid
+    }
+    this.service.updateTransport(data)
+    .subscribe(res => {
+      this.notification.success(':: Updated successfully');
+      this.formValue.reset();
+      this.dialogRef.close('update');
+    });
+  }
 
 }

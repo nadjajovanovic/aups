@@ -38,6 +38,22 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
+import { DialogMestaComponent } from './components/dialog/dialog-mesta/dialog-mesta.component';
+import { DialogPogonComponent } from './components/dialog/dialog-pogon/dialog-pogon.component';
+import { DialogRadnaMestaComponent } from './components/dialog/dialog-radna-mesta/dialog-radna-mesta.component';
+import { DialogSastojciComponent } from './components/dialog/dialog-sastojci/dialog-sastojci.component';
+import { DialogVrstaTransportaComponent } from './components/dialog/dialog-vrsta-transporta/dialog-vrsta-transporta.component';
+import { MatConfirmDialogComponent } from './components/mat-confirm-dialog/mat-confirm-dialog.component';
+import { DialogService } from './services/dialog.service';
+import { RadnikComponent } from './components/radnik/radnik.component';
+import { DialogRadnikComponent } from './components/dialog/dialog-radnik/dialog-radnik.component';
+import { SkladisteComponent } from './components/skladiste/skladiste.component';
+import { DialogSkladisteComponent } from './components/dialog/dialog-skladiste/dialog-skladiste.component';
+import { RadnikService } from './services/radnik.service';
+import { SkladisteService } from './services/skladiste.service';
+import { PlanProizvodnjeComponent } from './components/plan-proizvodnje/plan-proizvodnje.component';
+import { DialogPlanProizvodnjeComponent } from './components/dialog/dialog-plan-proizvodnje/dialog-plan-proizvodnje.component';
+import { PlanProizvodnjeService } from './services/planproizvodnje.service';
 
 @NgModule({
   declarations: [
@@ -49,7 +65,19 @@ import {MatSortModule} from '@angular/material/sort';
     SastojciComponent,
     VrstaTransportaComponent,
     TransportComponent,
-    DialogTransportComponent
+    DialogTransportComponent,
+    DialogMestaComponent,
+    DialogPogonComponent,
+    DialogRadnaMestaComponent,
+    DialogSastojciComponent,
+    DialogVrstaTransportaComponent,
+    MatConfirmDialogComponent,
+    RadnikComponent,
+    DialogRadnikComponent,
+    SkladisteComponent,
+    DialogSkladisteComponent,
+    PlanProizvodnjeComponent,
+    DialogPlanProizvodnjeComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +93,6 @@ import {MatSortModule} from '@angular/material/sort';
     BrowserAnimationsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    //MatMomentDateModule,
     MatInputModule,
     MatDialogModule,
     MatFormFieldModule,
@@ -76,10 +103,13 @@ import {MatSortModule} from '@angular/material/sort';
     MatPaginatorModule,
     MatSortModule
   ],
-  entryComponents: [DialogTransportComponent],
+  entryComponents: [DialogTransportComponent, MatConfirmDialogComponent, 
+    DialogMestaComponent, DialogPogonComponent, DialogRadnaMestaComponent,
+    DialogSastojciComponent, DialogVrstaTransportaComponent, DialogRadnikComponent, 
+    DialogSkladisteComponent, DialogPlanProizvodnjeComponent],
   providers: [MestoService, NotificationService, PogonService, 
     RadnoMestoService, SastojciService, VrstaTransportaService, TransportService,
-    /*{provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}}*/],
+     DialogService, RadnikService, SkladisteService, PlanProizvodnjeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

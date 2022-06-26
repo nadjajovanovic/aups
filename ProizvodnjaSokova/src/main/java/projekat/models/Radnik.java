@@ -33,24 +33,28 @@ public class Radnik implements Serializable {
 	private String username;
 
 	//bi-directional many-to-one association to Planproizvodnje
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany(mappedBy="radnik")
-	private List<Planproizvodnje> planproizvodnjes;
+	private List<Planproizvodnje> planproizvodnjes;*/
 
 	//bi-directional many-to-one association to Pogon
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name="pogonid")
-	private Pogon pogon;
+	private Pogon pogon;*/
+	@Column(name="pogonid")
+	private Integer pogon;
 
 	//bi-directional many-to-one association to Radnomesto
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name="radnomestoid")
-	private Radnomesto radnomesto;
+	private Radnomesto radnomesto;*/
+	@Column(name="radnomestoid")
+	private Integer radnomesto;
 
 	//bi-directional many-to-one association to Skladiste
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany(mappedBy="radnik")
-	private List<Skladiste> skladistes;
+	private List<Skladiste> skladistes;*/
 
 	public Radnik() {
 	}
@@ -103,7 +107,7 @@ public class Radnik implements Serializable {
 		this.username = username;
 	}
 
-	public List<Planproizvodnje> getPlanproizvodnjes() {
+	/*public List<Planproizvodnje> getPlanproizvodnjes() {
 		return this.planproizvodnjes;
 	}
 
@@ -123,25 +127,25 @@ public class Radnik implements Serializable {
 		planproizvodnje.setRadnik(null);
 
 		return planproizvodnje;
-	}
+	}*/
 
-	public Pogon getPogon() {
+	public Integer getPogon() {
 		return this.pogon;
 	}
 
-	public void setPogon(Pogon pogon) {
+	public void setPogon(Integer pogon) {
 		this.pogon = pogon;
 	}
 
-	public Radnomesto getRadnomesto() {
+	public Integer getRadnomesto() {
 		return this.radnomesto;
 	}
 
-	public void setRadnomesto(Radnomesto radnomesto) {
+	public void setRadnomesto(Integer radnomesto) {
 		this.radnomesto = radnomesto;
 	}
 
-	public List<Skladiste> getSkladistes() {
+	/*public List<Skladiste> getSkladistes() {
 		return this.skladistes;
 	}
 
@@ -161,6 +165,6 @@ public class Radnik implements Serializable {
 		skladiste.setRadnik(null);
 
 		return skladiste;
-	}
+	}*/
 
 }

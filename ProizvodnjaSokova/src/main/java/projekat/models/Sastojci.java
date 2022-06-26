@@ -25,9 +25,9 @@ public class Sastojci implements Serializable {
 	private String nazivs;
 
 	//bi-directional many-to-one association to Skladiste
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany(mappedBy="sastojci")
-	private List<Skladiste> skladistes;
+	private List<Skladiste> skladistes;*/
 
 	public Sastojci() {
 	}
@@ -48,7 +48,7 @@ public class Sastojci implements Serializable {
 		this.nazivs = nazivs;
 	}
 
-	public List<Skladiste> getSkladistes() {
+	/*public List<Skladiste> getSkladistes() {
 		return this.skladistes;
 	}
 
@@ -68,6 +68,6 @@ public class Sastojci implements Serializable {
 		skladiste.setSastojci(null);
 
 		return skladiste;
-	}
+	}*/
 
 }

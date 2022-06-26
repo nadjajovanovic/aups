@@ -1,8 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Pogon } from 'src/app/models/pogon';
+import { DialogService } from 'src/app/services/dialog.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PogonService } from 'src/app/services/pogon.service';
+import { DialogPogonComponent } from '../dialog/dialog-pogon/dialog-pogon.component';
 
 @Component({
   selector: 'app-pogon',
@@ -10,93 +16,88 @@ import { PogonService } from 'src/app/services/pogon.service';
   styleUrls: ['./pogon.component.css']
 })
 export class PogonComponent implements OnInit {
-
-  formValue!: FormGroup;
-  pogonModelObj : Pogon = new Pogon();
-  pogoni: Pogon[] = [];
-  showAdd!: boolean;
-  showUpdate!: boolean;
+  
   p: number = 1;
   searchedKeyword: string;
   heading: string;
+  displayedColumns: string[] = ['pogonid', 'oznakap', 'action'];
+  dataSource!: MatTableDataSource<Pogon>;
 
-  constructor(private formBuilder :  FormBuilder,
-    private service: PogonService,
-    private notification : NotificationService) {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+
+  constructor(private service: PogonService,
+    private notification : NotificationService,
+    private dialog: MatDialog,
+    private dialogService: DialogService) {
 
   }
 
   ngOnInit(): void {
-    this.formValue = this.formBuilder.group({
-      oznakap: ['']
-    });
     this.getAllPogona();
   } 
 
-  postPogonDetails(): void {
-    this.pogonModelObj.oznakap = this.formValue.value.oznakap;
+  getAllPogona() {
+    this.service.getAllPogona().subscribe({
+      next: (res) => {
+        this.dataSource = new MatTableDataSource(res);
 
-    this.service.addPogon(this.pogonModelObj)
-    .subscribe(res => {
-      this.notification.success(':: Added successfully');
-      let ref = document.getElementById('cancel');
-      ref?.click();
-      this.formValue.reset();
-      this.getAllPogona();
-    }, 
-    err => {
-      alert("Something went wrong");
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      error: (err) => {
+        alert("Error while fetching data");
+      }
     })
   }
 
-  getAllPogona() {
-    this.service.getAllPogona().subscribe(pogoni => {
-      this.pogoni = pogoni;
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogPogonComponent, {
+      width: '30%'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'save'){ 
+         this.getAllPogona();
+      }
+        
     });
   }
 
-  deletePogon(row : any) {
-    if(confirm('Are you sure you want to delete')) {
-      this.service.deletePogon(row.pogonid)
-    .subscribe(res => {
-      this.notification.warn(':: Deleted successfully');
-      this.getAllPogona();
-    }); 
+  editPogon(row: any) {
+    this.dialog.open(DialogPogonComponent, {
+      width: '30%',
+      data: row
+    }).afterClosed().subscribe(val => {
+      if(val === 'update') {
+        this.getAllPogona();
+      }
+    })
+  }
+
+  deletePogon(row: any) {
+    this.dialogService.openConfirmationDialog('Are you sure you want to delete this record?')
+    .afterClosed().subscribe(res => {
+      if(res) {
+        this.service.deletePogon(row.pogonid).subscribe
+        (
+          data => {
+            this.notification.warn(":: Deleted successfully");
+            this.getAllPogona();
+          }
+        )
+        console.log(res);
+      }
+    });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
-  }
-
-  onEdit(row: any) {
-    this.showAdd = false;
-    this.showUpdate = true;
-    this.pogonModelObj.pogonid = row.pogonid;
-    this.formValue.controls['oznakap'].setValue(row.oznakap);
-    this.heading = "Update pogon";
-  }
-
-  updatePogonDetails() {
-    this.pogonModelObj.oznakap = this.formValue.value.oznakap;
-    this.service.updatePogon(this.pogonModelObj)
-    .subscribe(res => {
-      this.notification.success(':: Updated successfully');
-      let ref = document.getElementById('cancel');
-      ref?.click();
-      this.formValue.reset();
-      this.getAllPogona();
-    });
-  }
-
-  clickAddPogon() {
-    this.formValue.reset();
-    this.showAdd = true;
-    this.showUpdate = false;
-    this.heading = "Add pogon";
-  }
-
-  key: string = 'id';
-  reverse: boolean = true;
-  sort(key: string) {
-    this.key = key;
-    this.reverse = !this.reverse;
   }
   
 }

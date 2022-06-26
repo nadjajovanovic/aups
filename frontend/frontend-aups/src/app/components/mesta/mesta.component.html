@@ -1,58 +1,42 @@
-<mat-toolbar color="primary">
-    <span class="title-center">Mesto</span>
-</mat-toolbar>
-<div class="d-flex container-fluid">
-  <button  (click) = "clickAddMesto()" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Create</button>
-  <input class="search-input" type="text" [(ngModel)] = "searchedKeyword" placeholder="Search">
-</div>
-<table id="dtBasicExample" class="table table-sm mt-3">
-    <thead>
-        <tr>
-            <th class="th-sm" scope="col" (click) = "sort('id')">Mesto id&nbsp;<i class="fa fa-sort"></i></th>
-            <th class="th-sm" scope="col" (click) = "sort('nazivm')">Naziv mesta&nbsp;<i class="fa fa-sort"></i></th>
-            <th class="th-sm" scope="col" (click) = "sort('postanskibroj')">Postanski broj&nbsp;<i class="fa fa-sort"></i></th>
-            <th class="th-sm"scope="col">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor = "let row of mesta | orderBy: key : reverse | filter: searchedKeyword | paginate: {itemsPerPage: 5, currentPage: p};">
-            <td>{{ row.mestoid}}</td>
-            <td>{{ row.nazivm}}</td>
-            <td>{{ row.postanskibroj}}</td>
-            <td>
-                <button (click) = "onEdit(row)" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-info">&nbsp;<i class="fa fa-pen"></i></button>
-                <button (click) = "deleteMesto(row)" class="btn btn-danger mx-3">&nbsp;<i class="fa fa-trash"></i></button>
-            </td>
-        </tr>
-    </tbody>
-    <pagination-controls (pageChange) = "p = $event"></pagination-controls>
-</table>
-  
-  <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{ heading }}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup] = "formValue">
-          <div class="form-group">
-            <label for="exampleInputEmail1">Naziv mesta</label>
-            <input type="text" formControlName = "nazivm" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <label for="exampleInputEmail1">Postanski broj</label>
-            <input type="text" formControlName = "postanskibroj" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-          </div>
-        </form>
-      </div>
-        <div class="modal-footer">
-          <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" *ngIf = "showAdd" class="btn btn-primary" (click) = "postMestoDetails()">Add</button>
-          <button type="button" *ngIf = "showUpdate" class="btn btn-primary" (click) = "updateMestoDetails()">Update</button>
-        </div>
-      </div>
+<div class="container">
+  <div style="margin-top: 10px;">
+    <button (click) = "openDialog()" type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Create</button>
+    <div class="mat-elevation-z8">
+      <mat-form-field appearance="outline">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input>
+      </mat-form-field>
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="mestoid">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Mesta id</th>
+          <td mat-cell *matCellDef="let row"> {{row.mestoid}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="nazivm">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Naziv mesta</th>
+          <td mat-cell *matCellDef="let row"> {{row.nazivm}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="postanskibroj">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Postanski broj </th>
+          <td mat-cell *matCellDef="let row"> {{row.postanskibroj}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let row">
+            <button type="button" (click) = "editMesto(row)" class="btn btn-info">&nbsp;<i class="fa fa-pen"></i></button>
+            <button (click) = "deleteMesto(row)" class="btn btn-danger mx-3">&nbsp;<i class="fa fa-trash"></i></button>
+          </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+      </table>
+    
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" ></mat-paginator>
     </div>
+  </div>
 </div>

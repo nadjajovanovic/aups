@@ -25,9 +25,9 @@ public class Radnomesto implements Serializable {
 	private String nazivrm;
 
 	//bi-directional many-to-one association to Radnik
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToMany(mappedBy="radnomesto")
-	private List<Radnik> radniks;
+	private List<Radnik> radniks;*/
 
 	public Radnomesto() {
 	}
@@ -48,7 +48,7 @@ public class Radnomesto implements Serializable {
 		this.nazivrm = nazivrm;
 	}
 
-	public List<Radnik> getRadniks() {
+	/*public List<Radnik> getRadniks() {
 		return this.radniks;
 	}
 
@@ -68,6 +68,6 @@ public class Radnomesto implements Serializable {
 		radnik.setRadnomesto(null);
 
 		return radnik;
-	}
+	}*/
 
 }

@@ -1,68 +1,4 @@
-<mat-toolbar color="primary">
-    <span class="title-center">Transport</span>
-</mat-toolbar>
-<div class="d-flex container-fluid">
-  <button  (click) = "clickAddTransport()" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Create</button>
-  <input class="search-input" type="text" [(ngModel)] = "searchedKeyword" placeholder="Search">
-</div>
-<table class="table table-sm mt-3">
-    <thead>
-        <tr>
-            <th class="th-sm" scope="col" (click) = "sort('id')">Transport id&nbsp;<i class="fa fa-sort"></i></th>
-            <th class="th-sm" scope="col" (click) = "sort('datumt')">Datum transporta&nbsp;<i class="fa fa-sort"></i></th>
-            <th class="th-sm" scope="col" (click) = "sort('lokacija')">Lokacija&nbsp;<i class="fa fa-sort"></i></th>
-            <th class="th-sm" scope="col" (click) = "sort('vrstatransporta')">Vrsta transporta&nbsp;<i class="fa fa-sort"></i></th>
-            <th class="th-sm"scope="col">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor = "let row of transporti | orderBy: key : reverse | filter: searchedKeyword | paginate: {itemsPerPage: 5, currentPage: p};">
-            <td>{{ row.transportid}}</td>
-            <td>{{ row.datumt}}</td>
-            <td>{{ row.lokacija}}</td>
-            <td>{{ row.vrstatransporta}}</td>
-            <td>
-                <button (click) = "onEdit(row)" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-info">&nbsp;<i class="fa fa-pen"></i></button>
-                <button (click) = "deleteTransport(row)" class="btn btn-danger mx-3">&nbsp;<i class="fa fa-trash"></i></button>
-            </td>
-        </tr>
-    </tbody>
-    <pagination-controls (pageChange) = "p = $event"></pagination-controls>
-</table>
-  
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{ heading }}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup] = "formValue">
-          <div class="form-group">
-            <label for="exampleInputEmail1">Datum transporta</label>
-            <input type="text" formControlName = "datumt" class="form-control" id="exampleInputEmail1">
-            <label for="exampleInputEmail1">Lokacija transporta</label>
-            <input type="text" formControlName = "lokacija" class="form-control" id="exampleInputEmail1">
-            <label for="exampleFormControlSelect1">Vrsta transporta</label>
-            <select class="form-control" (change)="selectChangeHandler($event)" formControlName = "vrstatransporta" id="vrsteTransporta">
-              <option *ngFor="let vrsta of vrsteTransporta">{{ vrsta.nazivvt }}</option>
-            </select>
-            <p><span>You selected: </span><b>{{selectedVrsta}}</b></p>
-          </div>
-        </form>
-      </div>
-        <div class="modal-footer">
-          <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" *ngIf = "showAdd" class="btn btn-primary" (click) = "postTransportaDetails()">Add</button>
-          <button type="button" *ngIf = "showUpdate" class="btn btn-primary" (click) = "updateTransportDetails()">Update</button>
-        </div>
-      </div>
-    </div>
-</div>
-<!--<div class="container">
+<div class="container">
   <div style="margin-top: 10px;">
     <button (click) = "openDialog()" type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Create</button>
     <div class="mat-elevation-z8">
@@ -79,7 +15,7 @@
     
         <ng-container matColumnDef="datumt">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Datum trasnporta</th>
-          <td mat-cell *matCellDef="let row"> {{row.datumt}} </td>
+          <td mat-cell *matCellDef="let row"> {{row.datumt | date : "dd.MM.yyyy."}} </td>
         </ng-container>
     
         <ng-container matColumnDef="lokacija">
@@ -89,7 +25,7 @@
     
         <ng-container matColumnDef="vrstatransporta">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Vrsta transporta </th>
-          <td mat-cell *matCellDef="let row"> {{row.vrstatransporta.nazivvt}} </td>
+          <td mat-cell *matCellDef="let row"> {{row.vrstatransporta}} </td>
         </ng-container>
 
         <ng-container matColumnDef="action">
@@ -108,4 +44,4 @@
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" ></mat-paginator>
     </div>
   </div>
-</div>-->
+</div>
