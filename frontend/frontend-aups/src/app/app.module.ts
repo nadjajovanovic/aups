@@ -54,6 +54,9 @@ import { SkladisteService } from './services/skladiste.service';
 import { PlanProizvodnjeComponent } from './components/plan-proizvodnje/plan-proizvodnje.component';
 import { DialogPlanProizvodnjeComponent } from './components/dialog/dialog-plan-proizvodnje/dialog-plan-proizvodnje.component';
 import { PlanProizvodnjeService } from './services/planproizvodnje.service';
+import { ProizvodComponent } from './components/proizvod/proizvod.component';
+import { DialogProizvodComponent } from './components/dialog/dialog-proizvod/dialog-proizvod.component';
+import { ProizvodService } from './services/proizvod.service';
 
 @NgModule({
   declarations: [
@@ -77,7 +80,9 @@ import { PlanProizvodnjeService } from './services/planproizvodnje.service';
     SkladisteComponent,
     DialogSkladisteComponent,
     PlanProizvodnjeComponent,
-    DialogPlanProizvodnjeComponent
+    DialogPlanProizvodnjeComponent,
+    ProizvodComponent,
+    DialogProizvodComponent
   ],
   imports: [
     BrowserModule,
@@ -106,10 +111,10 @@ import { PlanProizvodnjeService } from './services/planproizvodnje.service';
   entryComponents: [DialogTransportComponent, MatConfirmDialogComponent, 
     DialogMestaComponent, DialogPogonComponent, DialogRadnaMestaComponent,
     DialogSastojciComponent, DialogVrstaTransportaComponent, DialogRadnikComponent, 
-    DialogSkladisteComponent, DialogPlanProizvodnjeComponent],
+    DialogSkladisteComponent, DialogPlanProizvodnjeComponent, DialogProizvodComponent],
   providers: [MestoService, NotificationService, PogonService, 
     RadnoMestoService, SastojciService, VrstaTransportaService, TransportService,
-     DialogService, RadnikService, SkladisteService, PlanProizvodnjeService],
+     DialogService, RadnikService, SkladisteService, PlanProizvodnjeService, ProizvodService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

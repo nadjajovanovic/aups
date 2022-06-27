@@ -4,6 +4,7 @@ import { HomeComponent } from './components/home/home.component';
 import { MestaComponent } from './components/mesta/mesta.component';
 import { PlanProizvodnjeComponent } from './components/plan-proizvodnje/plan-proizvodnje.component';
 import { PogonComponent } from './components/pogon/pogon.component';
+import { ProizvodComponent } from './components/proizvod/proizvod.component';
 import { RadnikComponent } from './components/radnik/radnik.component';
 import { RadnoMestoComponent } from './components/radno-mesto/radno-mesto.component';
 import { SastojciComponent } from './components/sastojci/sastojci.component';
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'radnik', component: RadnikComponent },
   { path: 'skladiste', component: SkladisteComponent },
   { path: 'plan-proizvodnje', component: PlanProizvodnjeComponent },
+  { path: 'proizvod', component: ProizvodComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 

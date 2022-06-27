@@ -46,7 +46,7 @@ export class DialogSkladisteComponent implements OnInit {
 
     if(this.editData) {
       this.actionBtn = "Update";
-      this.heading = "Update transport";
+      this.heading = "Update skladiste";
       this.formValue.patchValue({
         oznakas: this.editData.oznakas,
         mesto: this.editData.mesto,

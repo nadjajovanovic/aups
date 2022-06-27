@@ -6,14 +6,14 @@ import projekat.models.Vrstatransporta;
 
 public class TransportMapper {
 	
-	@SuppressWarnings("null")
-	public void toDTO(TransportDTO dto) {
-		Transport transport = null;
-		Vrstatransporta vt = null;
-		transport.setTransportid(dto.getTransportid());
-		transport.setDatumt(dto.getDatumt());
-		transport.setLokacija(dto.getLokacija());
-		transport.setVrstatransporta(dto.getVrstatransporta(vt.getNazivvt()));
-	}
+	/*public static TransportDTO toDTO(Transport transport) {
+		TransportDTO dto = new TransportDTO();
+		dto.setTransportid(transport.getTransportid());
+		dto.setDatumt(transport.getDatumt());
+		dto.setLokacija(transport.getLokacija());
+		dto.setNazivvt(transport.getVrstatransporta());
+		return dto;
+		
+	}*/
 
 }

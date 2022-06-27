@@ -14,7 +14,7 @@ public class TransportDTO {
 	
 	private String lokacija;
 	
-	private String vrstatransporta;
+	private String nazivvt;
 
 	public Integer getTransportid() {
 		return transportid;
@@ -40,18 +40,15 @@ public class TransportDTO {
 		this.lokacija = lokacija;
 	}
 
-	public String getVrstatransporta() {
-		return vrstatransporta;
+	public String getNazivvt() {
+		return nazivvt;
 	}
 
-	public void setVrstatransporta(String vrstatransporta) {
-		this.vrstatransporta = vrstatransporta;
+	public void setNazivvt(String nazivvt) {
+		this.nazivvt = nazivvt;
 	}
 
-	public Integer getVrstatransporta(String nazivvt) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 	
 }

@@ -72,7 +72,7 @@ export class DialogRadnikComponent implements OnInit {
 
  
 
-  public addRadnoMesto() {
+  public addRadnika() {
     if(!this.editData) {
       if(this.formValue.valid) {
         this.service.addRadnik(this.formValue.value)

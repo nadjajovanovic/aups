@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>{{ heading }}</h1>
+<div mat-dialog-content>
+    <form [formGroup] = "formValue">
+        <mat-form-field appearance="outline">
+            <mat-label>Cena proizvoda</mat-label>
+            <input formControlName = "cena" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Naziv proizvoda</mat-label>
+            <input formControlName = "nazivpr" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Vrsta proizvoda</mat-label>
+            <input formControlName = "vrstapr" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Oznaka plana proizvodnje</mat-label>
+            <mat-select formControlName = "planproizvodnje">
+                <mat-option *ngFor="let pp of planproizvodnje" [value] = "pp.planproizvodnjeid">
+                    {{ pp.oznakapp }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions [align]="'end'">
+    <button mat-raised-button  color="warn" mat-dialog-close>Close</button>
+    <button mat-raised-button  style="margin-left: 8px;" color="primary" (click) = "addProizvod()">{{actionBtn}}</button>
+</div>

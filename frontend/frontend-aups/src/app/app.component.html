@@ -1,28 +1,45 @@
-<header class="p-3 bg-dark text-white">
-  <div class="container">
-    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
-      </a>
-
-      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a [routerLink]="['home']" class="nav-link px-2 text-white">HealthyJuices</a></li>
-        <li><a [routerLink]="['mesto']" class="nav-link px-2 text-white">Mesto</a></li>
-        <li><a [routerLink]="['pogon']" class="nav-link px-2 text-white">Pogon</a></li>
-        <li><a [routerLink]="['radno-mesto']" class="nav-link px-2 text-white">Radno mesto</a></li>
-        <li><a [routerLink]="['sastojci']" class="nav-link px-2 text-white">Sastojci</a></li>
-        <li><a [routerLink]="['vrsta-transporta']" class="nav-link px-2 text-white">Vrsta transporta</a></li>
-        <li><a [routerLink]="['transport']" class="nav-link px-2 text-white">Transport</a></li>
-        <li><a [routerLink]="['radnik']" class="nav-link px-2 text-white">Radnik</a></li>
-        <li><a [routerLink]="['skladiste']" class="nav-link px-2 text-white">Skladiste</a></li>
-        <li><a [routerLink]="['plan-proizvodnje']" class="nav-link px-2 text-white">Plan proizvodnje</a></li>
-      </ul>
-
-      <div class="text-end">
-        <button type="button" class="btn btn-outline-light me-2">Login</button>
-        <button type="button" class="btn btn-warning">Sign-up</button>
-      </div>
-    </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" [routerLink]="['home']">HealthyJuices</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['mesto']">Mesto</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['pogon']">Pogon</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['radno-mesto']">Radno mesto</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['sastojci']">Sastojci</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['vrsta-transporta']">Vrsta transporta</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['transport']">Transport</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['radnik']">Radnik</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['skladiste']">Skladiste</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['plan-proizvodnje']">Plan proizvodnje</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['proizvod']">Proizvod</a>
+      </li>
+    </ul>
   </div>
-</header>
+  <div class="text-end">
+    <button type="button" class="btn btn-outline-light me-2">Login</button>
+    <button type="button" class="btn btn-warning">Sign-up</button>
+  </div>
+</nav>
 <router-outlet></router-outlet>

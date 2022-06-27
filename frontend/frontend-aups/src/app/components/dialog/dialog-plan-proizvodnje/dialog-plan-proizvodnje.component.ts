@@ -43,7 +43,7 @@ export class DialogPlanProizvodnjeComponent implements OnInit {
 
     if(this.editData) {
       this.actionBtn = "Update";
-      this.heading = "Update transport";
+      this.heading = "Update plan proizvodnje";
       this.formValue.patchValue({
         datum: this.editData.datum,
         kolicina: this.editData.kolicina,

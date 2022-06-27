@@ -30,7 +30,7 @@ export class DialogVrstaTransportaComponent implements OnInit {
 
     if(this.editData) {
       this.actionBtn = "Update";
-      this.heading = "Update mesto";
+      this.heading = "Update vrstu transporta";
       this.formValue.patchValue({
         nazivvt: this.editData.nazivvt
       });

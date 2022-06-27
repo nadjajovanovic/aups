@@ -42,9 +42,7 @@ export class DialogPogonComponent implements OnInit {
     this.dialogRef.close();
   }
 
- 
-
-  public addMesto() {
+  public addPogon() {
     if(!this.editData) {
       if(this.formValue.valid) {
         this.service.addPogon(this.formValue.value)
