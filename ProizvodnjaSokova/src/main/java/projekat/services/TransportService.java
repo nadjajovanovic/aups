@@ -3,6 +3,7 @@ package projekat.services;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import projekat.models.Transport;
@@ -28,11 +29,13 @@ public class TransportService {
 		return transport;
 	}
 	
+	//@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 	public Transport insert(Transport transport) {
 		Transport inserted = transportRepository.save(transport);
 		return inserted;
 	}
 	
+	//@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 	public Transport update(Transport transport) {
 		Transport updated = null;
 		if (transportRepository.existsById(transport.getTransportid())) {
@@ -41,6 +44,7 @@ public class TransportService {
 		return updated;
 	}
 	
+	//@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 	public boolean delete(Integer id) {
 		if(transportRepository.existsById(id))
 			transportRepository.deleteById(id);

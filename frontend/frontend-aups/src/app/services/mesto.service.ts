@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { Mesto } from "../models/mesto";
 import { FormGroup, FormControl } from "@angular/forms";
@@ -14,26 +14,47 @@ export class MestoService {
 
     constructor (private httpClient : HttpClient) {}
     
+    getToken() {
+        let getToken = JSON.parse(localStorage.getItem('token') as any);
+        let token = Object.values(getToken);
+        return token;
+    }
+
+    getHttpHeaders(token: any) {
+        let reqHeaders = new HttpHeaders({
+            'Authorization': 'Bearer ' + token
+        });
+        return reqHeaders;
+    }
+
     public getAllMesta(): Observable<Mesto[]> {
-        return this.httpClient.get<Mesto[]>(this.mestoUrl);
+        let token = this.getToken();
+        let reqHeaders = this.getHttpHeaders(token);
+        return this.httpClient.get<Mesto[]>(this.mestoUrl, {headers: reqHeaders});
     }
 
     addMesto(data: any) {
-        return this.httpClient.post<any>(this.mestoUrl, data)
+        let token = this.getToken();
+        let reqHeaders = this.getHttpHeaders(token);
+        return this.httpClient.post<any>(this.mestoUrl, data, {headers: reqHeaders})
         .pipe(map((res: any) => {
             return res;
         }));
     }
 
     updateMesto(data: any) {
-        return this.httpClient.put(this.mestoUrl, data)
+        let token = this.getToken();
+        let reqHeaders = this.getHttpHeaders(token);
+        return this.httpClient.put(this.mestoUrl, data, {headers: reqHeaders})
         .pipe(map((res: any) => {
             return res;
         }));
     }
 
     deleteMesto(mestoid: number) {
-        return this.httpClient.delete(this.mestoUrl + mestoid)
+        let token = this.getToken();
+        let reqHeaders = this.getHttpHeaders(token);
+        return this.httpClient.delete(this.mestoUrl + mestoid, {headers: reqHeaders})
         .pipe(map((res: any) => {
             return res;
         }));

@@ -28,6 +28,7 @@ public class RadnoMestoController {
 		this.radnoMestoService = radnoMestoService;
 	}
 	
+	@CrossOrigin
 	@GetMapping("radno-mesto")
 	public Collection<Radnomesto> getAllRadnaMesta() {
 		final var radnaMesta = radnoMestoService.getAll();
@@ -35,6 +36,7 @@ public class RadnoMestoController {
 		return listaRadnihMesta;
 	}
 	
+	@CrossOrigin
 	@GetMapping("radno-mesto/{radnoMestoId}")
 	public Radnomesto getRadnoMesto(@PathVariable Integer radnoMestoId) {
 		final var oneRadnoMesto = radnoMestoService.getOne(radnoMestoId);

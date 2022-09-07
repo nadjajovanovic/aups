@@ -18,7 +18,7 @@ export class RadnikComponent implements OnInit {
 
   p: number = 1;
   searchedKeyword: string;
-  displayedColumns: string[] = ['radnikid', 'ime', 'prezime', 'jmbg', 'username', 'password', 'pogon', 'radnomesto', 'action'];
+  displayedColumns: string[] = ['radnikid', 'ime', 'prezime', 'jmbg', 'username', 'pogon', 'radnomesto', 'action'];
   dataSource!: MatTableDataSource<Radnik>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

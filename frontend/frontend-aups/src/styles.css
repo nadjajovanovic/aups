@@ -29,9 +29,11 @@ snack-bar-container.notification simple-snack-bar {
     font-weight: bold;
 }
 
-/*mat-form-field {
-    width: 100%;
-}*/
+.text {
+    margin-right: 15px;
+    margin-top: 6px;
+    color: white;
+}
 
 table {
     width: 100%;

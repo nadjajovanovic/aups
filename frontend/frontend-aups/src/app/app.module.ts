@@ -57,6 +57,9 @@ import { PlanProizvodnjeService } from './services/planproizvodnje.service';
 import { ProizvodComponent } from './components/proizvod/proizvod.component';
 import { DialogProizvodComponent } from './components/dialog/dialog-proizvod/dialog-proizvod.component';
 import { ProizvodService } from './services/proizvod.service';
+import { RegisterComponent } from './components/auth/register/register.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -82,7 +85,9 @@ import { ProizvodService } from './services/proizvod.service';
     PlanProizvodnjeComponent,
     DialogPlanProizvodnjeComponent,
     ProizvodComponent,
-    DialogProizvodComponent
+    DialogProizvodComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -114,7 +119,7 @@ import { ProizvodService } from './services/proizvod.service';
     DialogSkladisteComponent, DialogPlanProizvodnjeComponent, DialogProizvodComponent],
   providers: [MestoService, NotificationService, PogonService, 
     RadnoMestoService, SastojciService, VrstaTransportaService, TransportService,
-     DialogService, RadnikService, SkladisteService, PlanProizvodnjeService, ProizvodService],
+     DialogService, RadnikService, SkladisteService, PlanProizvodnjeService, ProizvodService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

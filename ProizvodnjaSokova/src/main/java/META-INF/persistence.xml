@@ -11,5 +11,7 @@
 		<class>projekat.models.Skladiste</class>
 		<class>projekat.models.Transport</class>
 		<class>projekat.models.Vrstatransporta</class>
+		<class>projekat.models.Role</class>
+		<class>projekat.models.User</class>
 	</persistence-unit>
 </persistence>

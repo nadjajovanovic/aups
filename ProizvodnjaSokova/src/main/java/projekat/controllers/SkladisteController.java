@@ -28,6 +28,7 @@ public class SkladisteController {
 		this.skladisteService = skladisteService;
 	}
 	
+	@CrossOrigin
 	@GetMapping("skladiste")
 	public Collection<Skladiste> getAllSkladiste() {
 		final var skladista = skladisteService.getAll();
@@ -35,6 +36,7 @@ public class SkladisteController {
 		return listaSkladista;
 	}
 	
+	@CrossOrigin
 	@GetMapping("skladiste/{skladisteid}")
 	public Skladiste getSkladiste(@PathVariable Integer skladisteid) {
 		final var oneSkladiste = skladisteService.getOne(skladisteid);

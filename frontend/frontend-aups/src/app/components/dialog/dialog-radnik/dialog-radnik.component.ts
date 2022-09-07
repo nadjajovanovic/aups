@@ -21,7 +21,7 @@ export class DialogRadnikComponent implements OnInit {
   formValue!: FormGroup;
   actionBtn : string = "Save";
   currentid : number;
-  heading: string = "Add radno mesto";
+  heading: string = "Add radnik";
 
   constructor(private pogonService: PogonService,
     private radnoMestoService: RadnoMestoService,
@@ -37,20 +37,18 @@ export class DialogRadnikComponent implements OnInit {
       prezime: ['', Validators.required],
       jmbg: ['', Validators.required],
       username: ['', Validators.required],
-      password: ['', Validators.required],
       pogon: ['', Validators.required],
       radnomesto: ['', Validators.required]
     });
 
     if(this.editData) {
       this.actionBtn = "Update";
-      this.heading = "Update radno mesto";
+      this.heading = "Update radnik";
       this.formValue.patchValue({
         ime: this.editData.ime,
         prezime: this.editData.prezime,
         jmbg: this.editData.jmbg,
         username: this.editData.username,
-        password: this.editData.password,
         pogon: this.editData.pogon,
         radnomesto:this.editData.radnomesto
       });
@@ -100,7 +98,6 @@ export class DialogRadnikComponent implements OnInit {
       prezime: this.formValue.value.prezime,
       jmbg: this.formValue.value.jmbg,
       username: this.formValue.value.username,
-      password: this.formValue.value.password,
       pogon: this.formValue.value.pogon,
       radnomesto: this.formValue.value.radnomesto,
       radnikid: this.currentid

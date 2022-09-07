@@ -28,6 +28,7 @@ public class VrstaTransportaController {
 		this.vrstaTransportaService = vrstaTransportaService;
 	}
 	
+	@CrossOrigin
 	@GetMapping("vrsta-transporta")
 	public Collection<Vrstatransporta> getAllVrstaTransporta() {
 		final var vrsteTrasnporta = vrstaTransportaService.getAll();
@@ -35,6 +36,7 @@ public class VrstaTransportaController {
 		return listaVrstaTransporta;
 	}
 	
+	@CrossOrigin
 	@GetMapping("vrsta-transporta/{vrstaTransportaId}")
 	public Vrstatransporta getVrstaTransporta(@PathVariable Integer vrstaTransportaId) {
 		final var oneVrstaTransporta = vrstaTransportaService.getOne(vrstaTransportaId);

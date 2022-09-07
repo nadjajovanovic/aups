@@ -3,6 +3,7 @@ package projekat.services;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import projekat.models.Pogon;
@@ -28,11 +29,13 @@ public class PogonService {
 		return pogon;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	public Pogon insert(Pogon pogon) {
 		Pogon inserted = pogonRepository.save(pogon);
 		return inserted;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	public Pogon update(Pogon pogon) {
 		Pogon updated = pogonRepository.save(pogon);
 		if (pogonRepository.existsById(pogon.getPogonid())) {
@@ -41,6 +44,7 @@ public class PogonService {
 		return updated;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	public boolean delete(Integer id) {
 		if(pogonRepository.existsById(id))
 			pogonRepository.deleteById(id);

@@ -28,6 +28,7 @@ public class SastojciController {
 		this.sastojciService = sastojciService;
 	}
 	
+	@CrossOrigin
 	@GetMapping("sastojci")
 	public Collection<Sastojci> getAllSastojci() {
 		final var sastojci = sastojciService.getAll();
@@ -35,6 +36,7 @@ public class SastojciController {
 		return listaSastojaka;
 	}
 	
+	@CrossOrigin
 	@GetMapping("sastojci/{sastojciid}")
 	public Sastojci getSastojak(@PathVariable Integer sastojciid) {
 		final var oneSastojak = sastojciService.getOne(sastojciid);

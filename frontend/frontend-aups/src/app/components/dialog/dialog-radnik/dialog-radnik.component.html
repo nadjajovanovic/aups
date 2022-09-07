@@ -1,6 +1,5 @@
 <h1 mat-dialog-title>{{ heading }}</h1>
 <div mat-dialog-content>
-    <p>{{ formValue.value | json }}</p>
     <form [formGroup] = "formValue">
         <mat-form-field appearance="outline">
             <mat-label>Ime radnika</mat-label>
@@ -17,10 +16,6 @@
         <mat-form-field appearance="outline">
             <mat-label>Username radnika</mat-label>
             <input formControlName = "username" matInput>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Sifra radnika</mat-label>
-            <input formControlName = "password" matInput>
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Pogon</mat-label>

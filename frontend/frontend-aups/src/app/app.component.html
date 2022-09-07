@@ -37,9 +37,14 @@
       </li>
     </ul>
   </div>
-  <div class="text-end">
-    <button type="button" class="btn btn-outline-light me-2">Login</button>
-    <button type="button" class="btn btn-warning">Sign-up</button>
-  </div>
+  <ng-container *ngIf="!ifLoggedIn">
+    <div class="text-end">
+      <button type="button" class="btn btn-outline-light me-2" [routerLink]="['login']">Login</button>
+      <button type="button" class="btn btn-warning" [routerLink]="['register']">Sign-up</button>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="ifLoggedIn">
+    <button type="button" class="btn btn-warning" (click)="logout()">Logout</button>
+  </ng-container>
 </nav>
 <router-outlet></router-outlet>

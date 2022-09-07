@@ -28,6 +28,7 @@ public class RadnikController {
 		this.radnikService = radnikService;
 	}
 	
+	@CrossOrigin
 	@GetMapping("radnik")
 	public Collection<Radnik> getAllRadnike() {
 		final var radnici = radnikService.getAll();
@@ -35,6 +36,7 @@ public class RadnikController {
 		return listaRadnika;
 	}
 	
+	@CrossOrigin
 	@GetMapping("radnik/{radnikid}")
 	public Radnik getRadnika(@PathVariable Integer radnikid) {
 		final var oneRadnik = radnikService.getOne(radnikid);

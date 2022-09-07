@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import projekat.mappers.TransportMapper;
 import projekat.models.Transport;
 import projekat.services.TransportService;
 
@@ -29,6 +28,7 @@ public class TransportController {
 		this.transportService = transportService;
 	}
 	
+	@CrossOrigin
 	@GetMapping("transport")
 	public Collection<Transport> getAllTransport() {
 		final var trasnporti = transportService.getAll();
@@ -38,6 +38,7 @@ public class TransportController {
 		return listaTransporta;
 	}
 	
+	@CrossOrigin
 	@GetMapping("transport/{transportid}")
 	public Transport getTransport(@PathVariable Integer transportid) {
 		final var oneTransport = transportService.getOne(transportid);

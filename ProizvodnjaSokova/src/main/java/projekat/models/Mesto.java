@@ -26,11 +26,6 @@ public class Mesto implements Serializable {
 
 	private String postanskibroj;
 
-	//bi-directional many-to-one association to Skladiste
-	/*@JsonIgnore
-	@OneToMany(mappedBy="mesto")
-	private List<Skladiste> skladistes;*/
-
 	public Mesto() {
 	}
 
@@ -57,27 +52,5 @@ public class Mesto implements Serializable {
 	public void setPostanskibroj(String postanskibroj) {
 		this.postanskibroj = postanskibroj;
 	}
-
-	/*public List<Skladiste> getSkladistes() {
-		return this.skladistes;
-	}
-
-	public void setSkladistes(List<Skladiste> skladistes) {
-		this.skladistes = skladistes;
-	}
-
-	public Skladiste addSkladiste(Skladiste skladiste) {
-		getSkladistes().add(skladiste);
-		skladiste.setMesto(this);
-
-		return skladiste;
-	}
-
-	public Skladiste removeSkladiste(Skladiste skladiste) {
-		getSkladistes().remove(skladiste);
-		skladiste.setMesto(null);
-
-		return skladiste;
-	}*/
 
 }

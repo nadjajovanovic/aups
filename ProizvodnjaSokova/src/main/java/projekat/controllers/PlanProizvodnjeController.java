@@ -28,13 +28,17 @@ public class PlanProizvodnjeController {
 		this.planProizvodnjeService = planProizvodnjeService;
 	}
 	
+	@CrossOrigin
 	@GetMapping("plan-proizvodnje")
 	public Collection<Planproizvodnje> getAllPlanaProizvodnje() {
 		final var planProizvodnje = planProizvodnjeService.getAll();
-		final var listaPlanaProizvodnje = planProizvodnje.stream().sorted(Comparator.comparingInt(Planproizvodnje::getPlanproizvodnjeid)).toList();
+		final var listaPlanaProizvodnje = planProizvodnje.stream()
+				.sorted(Comparator.comparingInt(Planproizvodnje::getPlanproizvodnjeid))
+				.toList();
 		return listaPlanaProizvodnje;
 	}
 	
+	@CrossOrigin
 	@GetMapping("plan-proizvodnje/{planProizvodnjeId}")
 	public Planproizvodnje getPlanProizvodnje(@PathVariable Integer planProizvodnjeId) {
 		final var onePlanProizvodnje = planProizvodnjeService.getOne(planProizvodnjeId);

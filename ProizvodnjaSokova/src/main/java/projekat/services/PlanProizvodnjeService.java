@@ -3,6 +3,7 @@ package projekat.services;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import projekat.models.Planproizvodnje;
@@ -28,11 +29,13 @@ public class PlanProizvodnjeService {
 		return planProizvodnje;
 	}
 	
+	//@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 	public Planproizvodnje insert(Planproizvodnje planproizvodnje) {
 		Planproizvodnje inserted = planProizvodnjeRepository.save(planproizvodnje);
 		return inserted;
 	}
 	
+	//@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 	public Planproizvodnje update(Planproizvodnje planproizvodnje) {
 		Planproizvodnje updated = null;
 		if (planProizvodnjeRepository.existsById(planproizvodnje.getPlanproizvodnjeid())) {
@@ -41,6 +44,7 @@ public class PlanProizvodnjeService {
 		return updated;
 	}
 	
+	//@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 	public boolean delete(Integer id) {
 		if(planProizvodnjeRepository.existsById(id))
 			planProizvodnjeRepository.deleteById(id);

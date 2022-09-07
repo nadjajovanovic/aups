@@ -29,6 +29,7 @@ public class MestoController {
 		this.mestoService = mestoService;
 	}
 	
+	@CrossOrigin
 	@GetMapping("mesto")
 	public Collection<Mesto> getAllMesta() {
 		final var mesta = mestoService.getAll();
@@ -36,6 +37,7 @@ public class MestoController {
 		return listaMesta;
 	}
 
+	@CrossOrigin
 	@GetMapping("mesto/{mestoid}")
 	public Mesto getMesto(@PathVariable Integer mestoid) {
 		final var oneMesto = mestoService.getOne(mestoid);

@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './components/auth/login/login.component';
+import { RegisterComponent } from './components/auth/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { MestaComponent } from './components/mesta/mesta.component';
 import { PlanProizvodnjeComponent } from './components/plan-proizvodnje/plan-proizvodnje.component';
@@ -24,6 +26,8 @@ const routes: Routes = [
   { path: 'skladiste', component: SkladisteComponent },
   { path: 'plan-proizvodnje', component: PlanProizvodnjeComponent },
   { path: 'proizvod', component: ProizvodComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 

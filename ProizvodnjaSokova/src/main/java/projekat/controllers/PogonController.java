@@ -28,6 +28,7 @@ public class PogonController {
 		this.pogonService = pogonService;
 	}
 	
+	@CrossOrigin
 	@GetMapping("pogon")
 	public Collection<Pogon> getAllPogon() {
 		final var pogoni = pogonService.getAll();
@@ -35,6 +36,7 @@ public class PogonController {
 		return listaPogona;
 	}
 	
+	@CrossOrigin
 	@GetMapping("pogon/{pogonid}")
 	public Pogon getPogon(@PathVariable Integer pogonid) {
 		final var onePogon = pogonService.getOne(pogonid);

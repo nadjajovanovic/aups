@@ -28,6 +28,7 @@ public class ProizvodController {
 		this.proizvodService = proizvodService;
 	}
 	
+	@CrossOrigin
 	@GetMapping("proizvod")
 	public Collection<Proizvod> getAllProizvode() {
 		final var proizovdi = proizvodService.getAll();
@@ -35,6 +36,7 @@ public class ProizvodController {
 		return listaProizvoda;
 	}
 	
+	@CrossOrigin
 	@GetMapping("proizvod/{proizvodid}")
 	public Proizvod getProizvod(@PathVariable Integer proizvodid) {
 		final var oneProizvod = proizvodService.getOne(proizvodid);
